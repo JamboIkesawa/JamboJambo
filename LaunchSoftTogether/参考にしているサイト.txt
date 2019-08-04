@@ -1,0 +1,7 @@
+参考にしているサイト
+・ダイアログを表示できるようにする。
+    https://dobon.net/vb/dotnet/form/openfiledialog.html
+
+・ダイアログから取得したパスからファイル名のみを取得する。
+    https://code.i-harness.com/ja-jp/q/76ea06
+

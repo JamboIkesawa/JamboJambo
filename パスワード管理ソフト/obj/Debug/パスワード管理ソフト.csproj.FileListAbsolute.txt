@@ -1,0 +1,13 @@
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.exe.config
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.exe
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.pdb
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csprojResolveAssemblyReference.cache
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.Form1.resources
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.Properties.Resources.resources
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.GenerateResource.cache
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.CoreCompileInputs.cache
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.exe
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.pdb
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\System.Runtime.Serialization.Primitives.dll
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\YamlDotNet.NetCore.dll
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.CopyComplete
