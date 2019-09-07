@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ArrayOfInfomation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Infomation>
+    <Title>Twitterアカウント</Title>
+    <MailID>@xxxxyy0001</MailID>
+    <Password>H5r2h9hg</Password>
+    <Explain>Twitterのアカウント、そんなものはない。</Explain>
+  </Infomation>
+  <Infomation>
+    <Title>間違えて追加したよ</Title>
+    <MailID>jga;3jop@gmail..com</MailID>
+    <Password>jH;to3o</Password>
+    <Explain>適当な名前のメールアドレスってちょっと怪しい。</Explain>
+  </Infomation>
+  <Infomation>
+    <Title>ゲームアカウント</Title>
+    <MailID>XxK4z1kIMagur0xX</MailID>
+    <Password>tikuwa2001412</Password>
+    <Explain>中学・高校生が付けがちな名前。
+私　は　付　け　ま　せ　ん　で　し　た　。</Explain>
+  </Infomation>
+</ArrayOfInfomation>
