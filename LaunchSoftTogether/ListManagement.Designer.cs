@@ -34,6 +34,7 @@
 			this.label_lSoftPath = new System.Windows.Forms.Label();
 			this.label_SoftPath = new System.Windows.Forms.Label();
 			this.label_ListName = new System.Windows.Forms.Label();
+			this.button_Close = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -96,11 +97,22 @@
 			this.label_ListName.TabIndex = 1;
 			this.label_ListName.Text = "リスト名";
 			// 
+			// button_Close
+			// 
+			this.button_Close.Location = new System.Drawing.Point(368, 305);
+			this.button_Close.Name = "button_Close";
+			this.button_Close.Size = new System.Drawing.Size(75, 23);
+			this.button_Close.TabIndex = 3;
+			this.button_Close.Text = "閉じる";
+			this.button_Close.UseVisualStyleBackColor = true;
+			this.button_Close.Click += new System.EventHandler(this.button_Close_Click);
+			// 
 			// ListManagement
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(455, 340);
+			this.Controls.Add(this.button_Close);
 			this.Controls.Add(this.label_SoftPath);
 			this.Controls.Add(this.label_SoftName);
 			this.Controls.Add(this.label_lSoftPath);
@@ -123,5 +135,6 @@
 		private System.Windows.Forms.Label label_lSoftPath;
 		private System.Windows.Forms.Label label_SoftPath;
 		private System.Windows.Forms.Label label_ListName;
+		private System.Windows.Forms.Button button_Close;
 	}
 }

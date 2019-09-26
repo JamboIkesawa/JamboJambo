@@ -11,3 +11,6 @@ C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パス�
 C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\System.Runtime.Serialization.Primitives.dll
 C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\YamlDotNet.NetCore.dll
 C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.CopyComplete
+C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.exe.config
+C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.exe
+C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.pdb

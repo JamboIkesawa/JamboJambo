@@ -35,6 +35,7 @@
 			this.button_Close = new System.Windows.Forms.Button();
 			this.button_Delete = new System.Windows.Forms.Button();
 			this.button_Edit = new System.Windows.Forms.Button();
+			this.button_Save = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -55,7 +56,7 @@
 			this.dataGridView1.MultiSelect = false;
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dataGridView1.Size = new System.Drawing.Size(307, 158);
+			this.dataGridView1.Size = new System.Drawing.Size(405, 158);
 			this.dataGridView1.TabIndex = 1;
 			// 
 			// button_Add
@@ -108,15 +109,27 @@
 			this.button_Edit.UseVisualStyleBackColor = true;
 			this.button_Edit.Click += new System.EventHandler(this.button_Edit_Click);
 			// 
+			// button_Save
+			// 
+			this.button_Save.Location = new System.Drawing.Point(112, 244);
+			this.button_Save.Name = "button_Save";
+			this.button_Save.Size = new System.Drawing.Size(75, 23);
+			this.button_Save.TabIndex = 0;
+			this.button_Save.Text = "保存";
+			this.button_Save.UseVisualStyleBackColor = true;
+			this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(452, 291);
 			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.button_Close);
 			this.Controls.Add(this.button_Launch);
 			this.Controls.Add(this.button_Delete);
+			this.Controls.Add(this.button_Save);
 			this.Controls.Add(this.button_Add);
 			this.Controls.Add(this.button_Edit);
 			this.Controls.Add(this.button_ChooseList);
@@ -136,6 +149,7 @@
         private System.Windows.Forms.Button button_Close;
 		private System.Windows.Forms.Button button_Delete;
 		private System.Windows.Forms.Button button_Edit;
+		private System.Windows.Forms.Button button_Save;
 	}
 }
 

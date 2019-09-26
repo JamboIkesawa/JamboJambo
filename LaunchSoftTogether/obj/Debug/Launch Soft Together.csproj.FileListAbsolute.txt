@@ -38,3 +38,13 @@ C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\LaunchSoftTogether\obj\Debug
 C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.csproj.GenerateResource.Cache
 C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Main.resources
 C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.ListManagement.resources
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\bin\Debug\Launch Soft Together.exe.config
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch Soft Together.exe
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch Soft Together.pdb
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\bin\Debug\Launch Soft Together.exe
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\bin\Debug\Launch Soft Together.pdb
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch Soft Together.csprojResolveAssemblyReference.cache
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Main.resources
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.ListManagement.resources
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Properties.Resources.resources
+C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch Soft Together.csproj.GenerateResource.Cache

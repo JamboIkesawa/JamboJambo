@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace Launch_Soft_Together
 {
@@ -16,11 +17,13 @@ namespace Launch_Soft_Together
 	public partial class Main : Form
 	{
 		List<LaunchSoft> liSoft = new List<LaunchSoft>();
+		string thisDirectory = "";
 		
 		/* フォームを開いたときにする処理 */
 		public Main()
 		{
 			InitializeComponent();
+			thisDirectory = Directory.GetCurrentDirectory();
 		}
 
 		/* ゆくゆくはファイルを開くボタンになります。 */
@@ -37,7 +40,7 @@ namespace Launch_Soft_Together
 
 			OpenFileDialog oFD = new OpenFileDialog();
 			oFD.Title = "追加するファイルを選択してください";
-			oFD.InitialDirectory = @"C:\";
+			oFD.InitialDirectory = @"Users\\BP-022\\Desktop\\";
 			oFD.FileName = "";
 			oFD.Filter = "すべてのファイル|*.*";
 			oFD.FilterIndex = 1;
@@ -57,15 +60,11 @@ namespace Launch_Soft_Together
 			oFD.Dispose();
 		}
 
-		/* リストを追加する */
-		private void button_ChooseList_Click(object sender, EventArgs e)
-		{
-
-		}
-
+		/* リスト管理画面を開く */
 		private void button_Edit_Click(object sender, EventArgs e)
 		{
-			
+			ListManagement lmForm = new ListManagement();
+			lmForm.Show();
 		}
 
 		/* リストのソフトを起動する */
@@ -73,32 +72,39 @@ namespace Launch_Soft_Together
         {
 			Process pLaunch = new Process();
 
-			foreach(LaunchSoft ls in liSoft)
+			if (liSoft.Count > 0)
 			{
-				try
+				foreach (LaunchSoft ls in liSoft)
 				{
-					using (Process pro = new Process())
+					try
 					{
-						if (ls.isLaunch == true)
+						using (Process pro = new Process())
 						{
-							pro.StartInfo.FileName = ls.FilePath;
-							pro.Start();
+							if (ls.isLaunch == true)
+							{
+								pro.StartInfo.FileName = ls.FilePath;
+								pro.Start();
+							}
 						}
 					}
+					catch (InvalidOperationException ioe)
+					{
+						MessageBox.Show("エラー\n" + ioe.ToString());
+					}
+					catch (Win32Exception w32e)
+					{
+						MessageBox.Show("エラー\n" + w32e.ToString());
+					}
+					catch (FileNotFoundException fnfe)
+					{
+						MessageBox.Show("エラー\n" + fnfe.ToString());
+						//nantekottai
+					}
 				}
-				catch (InvalidOperationException ioe)
-				{
-					MessageBox.Show("エラー\n" + ioe.ToString());
-				}
-				catch (Win32Exception w32e)
-				{
-					MessageBox.Show("エラー\n" + w32e.ToString());
-				}
-				catch (FileNotFoundException fnfe)
-				{
-					MessageBox.Show("エラー\n" + fnfe.ToString());
-					//nantekottai
-				}
+			}
+			else
+			{
+				MessageBox.Show("追加するソフトがありません。");
 			}
         }
 
@@ -138,14 +144,27 @@ namespace Launch_Soft_Together
 			}
 		}
 
+		/* XMLファイルとしてリストを保存する */
+		private void button_Save_Click(object sender, EventArgs e)
+		{
+			SerializeXML(liSoft);
+		}
+
+		/* ダイアログからリスト(xml)を選択する */
+		private void button_ChooseList_Click(object sender, EventArgs e)
+		{
+			liSoft = DeserializeXml();
+			UpdateData();
+		}
+
 		/* データを追加する(重複があるかチェック) */
-		public void AddData(LaunchSoft doc)
+		private void AddData(LaunchSoft doc)
 		{
 			liSoft.Add(doc);
 		}
 
 		/* 保存情報があるときに使う。 */
-		public void LoadData()
+		private void LoadData()
 		{
 			/* リストが無いなら何もしない */
 			if (liSoft.Count < 1)
@@ -156,10 +175,107 @@ namespace Launch_Soft_Together
 		}
 
 		/* データを更新する */
-		public void UpdateData()
+		private void UpdateData()
 		{
 			dataGridView1.DataSource = null;
 			dataGridView1.DataSource = liSoft;
+		}
+
+		/* リストをXMLファイルとして保存する */
+		private void SerializeXML(List<LaunchSoft> lList)
+		{
+			string myDirectory = Directory.GetCurrentDirectory();
+			string xmlFile = "\\XmlFile\\";
+			string fileName = "test.xml";
+
+			/* ダイアログを表示して開きたいリストを選択する */
+			SaveFileDialog sFD = new SaveFileDialog();
+			sFD.Title = "セーブします";
+			sFD.InitialDirectory = myDirectory + xmlFile;
+			sFD.FileName = "";
+			sFD.Filter = "XMLファイル|*.xml";
+			sFD.FilterIndex = 1;
+			sFD.RestoreDirectory = true;
+			sFD.ShowHelp = true;
+			
+			if (sFD.ShowDialog() == DialogResult.OK)
+			{
+				//filePath = sFD.FileName;
+
+				/* 選択したファイルをデシリアライズしてリストに格納する。 */
+				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+				
+				StreamWriter sw = new StreamWriter(sFD.FileName, false, new UTF8Encoding(false));
+
+				xmlSer.Serialize(sw, lList);
+				sw.Close();
+			}
+			else
+			{
+
+			}
+
+			sFD.Dispose();
+
+			//XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+			//StreamWriter sw = new StreamWriter(myDirectory + xmlFile + fileName, false, new UTF8Encoding(false));
+
+			//xmlSer.Serialize(sw, lList);
+			//sw.Close();
+		}
+
+		/* XMLファイルからリストを開く */
+		private List<LaunchSoft> DeserializeXml()
+		{
+			List<LaunchSoft> llist = new List<LaunchSoft>();
+			string myDirectory = Directory.GetCurrentDirectory() + "\\";
+			string filePath = "";
+
+			/* ダイアログを表示して開きたいリストを選択する */
+			OpenFileDialog oFD = new OpenFileDialog();
+			oFD.Title = "オープンするファイルを選択してください";
+			oFD.InitialDirectory = myDirectory;
+			oFD.FileName = "";
+			oFD.Filter = "XMLファイル|*.xml";
+			oFD.FilterIndex = 1;
+			oFD.RestoreDirectory = true;
+			oFD.Multiselect = true;
+			oFD.ShowHelp = true;
+			oFD.ShowReadOnly = true;
+			oFD.ReadOnlyChecked = true;
+			if (oFD.ShowDialog() == DialogResult.OK)
+			{
+				filePath = oFD.FileName;
+
+				/* 選択したファイルをデシリアライズしてリストに格納する。 */
+				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+				try
+				{
+					StreamReader sr = new StreamReader(filePath, new UTF8Encoding(false));
+					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+					sr.Close();
+				}
+				catch(NotSupportedException nse)
+				{
+					llist = new List<LaunchSoft>()
+					{
+						new LaunchSoft()
+						{
+							isLaunch = false,
+							FileName = "できない",
+							FilePath = nse.ToString()
+						}
+					};
+				}
+			}
+			else
+			{
+				
+			}
+
+			oFD.Dispose();
+			
+			return llist;
 		}
 		
 		public class LaunchSoft

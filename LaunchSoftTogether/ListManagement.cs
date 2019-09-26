@@ -15,6 +15,12 @@ namespace Launch_Soft_Together
 		public ListManagement()
 		{
 			InitializeComponent();
+			//
+		}
+
+		private void button_Close_Click(object sender, EventArgs e)
+		{
+			Close();
 		}
 	}
 }
