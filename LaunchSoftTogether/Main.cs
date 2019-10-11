@@ -17,19 +17,21 @@ namespace Launch_Soft_Together
 	public partial class Main : Form
 	{
 		List<LaunchSoft> liSoft = new List<LaunchSoft>();
+		//List<LaunchSoftForDisplay> lifdSoft = new List<LaunchSoftForDisplay>();
 		string thisDirectory = "";
+		string xmlFile = "\\XmlFile\\";
+		string prevData = "Previous.xml";
 		
 		/* フォームを開いたときにする処理 */
 		public Main()
 		{
 			InitializeComponent();
 			thisDirectory = Directory.GetCurrentDirectory();
-		}
-
-		/* ゆくゆくはファイルを開くボタンになります。 */
-		private void button_Display_Click(object sender, EventArgs e)
-		{
-			LoadData();
+			liSoft = OpenPrevData();
+			dataGridView_Prev.DataSource = liSoft;
+			dataGridView_Current.DataSource = liSoft;
+			ChangeGridViewStyle(dataGridView_Prev);
+			UpdateData();
 		}
 
 		/* 起動するファイルを追加する */
@@ -40,7 +42,7 @@ namespace Launch_Soft_Together
 
 			OpenFileDialog oFD = new OpenFileDialog();
 			oFD.Title = "追加するファイルを選択してください";
-			oFD.InitialDirectory = @"Users\\BP-022\\Desktop\\";
+			oFD.InitialDirectory = "C:\\Users\\BP-022\\Desktop\\";
 			oFD.FileName = "";
 			oFD.Filter = "すべてのファイル|*.*";
 			oFD.FilterIndex = 1;
@@ -57,6 +59,7 @@ namespace Launch_Soft_Together
 				UpdateData();
 			}
 
+			oFD.Reset();
 			oFD.Dispose();
 		}
 
@@ -111,6 +114,7 @@ namespace Launch_Soft_Together
 		/* フォームを閉じる */
         private void button_Close_Click(object sender, EventArgs e)
         {
+			SaveCurrentData(liSoft);
 			Close();
         }
 
@@ -127,7 +131,7 @@ namespace Launch_Soft_Together
 			/* 削除するなら */
 			if (result == DialogResult.Yes)
 			{
-				foreach (DataGridViewRow gdvRow in dataGridView1.SelectedRows)
+				foreach (DataGridViewRow gdvRow in dataGridView_Current.SelectedRows)
 				{
 					liSoft.RemoveRange(gdvRow.Index, 1);
 				}
@@ -153,7 +157,20 @@ namespace Launch_Soft_Together
 		/* ダイアログからリスト(xml)を選択する */
 		private void button_ChooseList_Click(object sender, EventArgs e)
 		{
-			liSoft = DeserializeXml();
+			liSoft = DeserializeXML();
+			UpdateData();
+		}
+
+		/* DataGridViewで削除ボタンを押された行のデータを削除する。 */
+		private void dataGridView_Current_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridView dgv = (DataGridView)sender;
+			/*if(dgv.Columns[e.ColumnIndex].Name == "ボタン")
+			{
+				liSoft.RemoveRange(e.RowIndex, 1);
+				UpdateData();
+			}*/
+			liSoft.RemoveRange(e.RowIndex, 1);
 			UpdateData();
 		}
 
@@ -177,21 +194,53 @@ namespace Launch_Soft_Together
 		/* データを更新する */
 		private void UpdateData()
 		{
-			dataGridView1.DataSource = null;
-			dataGridView1.DataSource = liSoft;
+			// リストを更新する
+			dataGridView_Current.DataSource = null;
+			dataGridView_Current.DataSource = liSoft;
+
+			DataGridViewButtonColumn col = new DataGridViewButtonColumn();
+			col.Name = "ボタン";
+			col.UseColumnTextForButtonValue = true;
+			col.Text = "削除";
+			col.Width = 40;
+			dataGridView_Current.Columns.Add(col);
+			ChangeGridViewStyle(dataGridView_Current);
+		}
+
+		// DataGridView_Currentに削除ボタンを追加する。
+		private void ChangeGridViewStyle_AddDeleteButton()
+		{
+			
+		}
+
+		private void ChangeGridViewStyle(DataGridView changeGrid)
+		{
+			// ユーザーが行幅を調整できないようにする。
+			changeGrid.AllowUserToResizeRows = false;
+
+			// ファイルパスを非表示にする。
+			changeGrid.Columns[2].Visible = false;
+
+			// DataGridViewの列幅を調整する。
+			changeGrid.Columns[0].Width = 30;
+			changeGrid.Columns[1].Width = 100;
+
+			// 列の名前を変更する。
+			changeGrid.Columns[0].HeaderText = "起動";
+			changeGrid.Columns[1].HeaderText = "ソフト名";
+			
 		}
 
 		/* リストをXMLファイルとして保存する */
 		private void SerializeXML(List<LaunchSoft> lList)
 		{
-			string myDirectory = Directory.GetCurrentDirectory();
 			string xmlFile = "\\XmlFile\\";
 			string fileName = "test.xml";
 
 			/* ダイアログを表示して開きたいリストを選択する */
 			SaveFileDialog sFD = new SaveFileDialog();
 			sFD.Title = "セーブします";
-			sFD.InitialDirectory = myDirectory + xmlFile;
+			sFD.InitialDirectory = thisDirectory + xmlFile;
 			sFD.FileName = "";
 			sFD.Filter = "XMLファイル|*.xml";
 			sFD.FilterIndex = 1;
@@ -215,26 +264,38 @@ namespace Launch_Soft_Together
 
 			}
 
+			sFD.Reset();
 			sFD.Dispose();
+			
+		}
 
-			//XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
-			//StreamWriter sw = new StreamWriter(myDirectory + xmlFile + fileName, false, new UTF8Encoding(false));
+		/* フォームを閉じる前の状態で保存する */
+		private void SaveCurrentData(List<LaunchSoft> lList)
+		{
 
-			//xmlSer.Serialize(sw, lList);
-			//sw.Close();
+			/* 選択したファイルをデシリアライズしてリストに格納する。 */
+			if (liSoft.Count > 0)
+			{
+				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+
+				StreamWriter sw = new StreamWriter(thisDirectory + xmlFile + prevData, false, new UTF8Encoding(false));
+
+				xmlSer.Serialize(sw, lList);
+				sw.Close();
+			}
+
 		}
 
 		/* XMLファイルからリストを開く */
-		private List<LaunchSoft> DeserializeXml()
+		private List<LaunchSoft> DeserializeXML()
 		{
 			List<LaunchSoft> llist = new List<LaunchSoft>();
-			string myDirectory = Directory.GetCurrentDirectory() + "\\";
 			string filePath = "";
 
 			/* ダイアログを表示して開きたいリストを選択する */
 			OpenFileDialog oFD = new OpenFileDialog();
 			oFD.Title = "オープンするファイルを選択してください";
-			oFD.InitialDirectory = myDirectory;
+			oFD.InitialDirectory = thisDirectory + xmlFile;
 			oFD.FileName = "";
 			oFD.Filter = "XMLファイル|*.xml";
 			oFD.FilterIndex = 1;
@@ -277,14 +338,52 @@ namespace Launch_Soft_Together
 			
 			return llist;
 		}
-		
-		public class LaunchSoft
-		{
-			public bool isLaunch { get; set; }
-			public string FileName { get; set; }
-			public string FilePath { get; set; }
-		}
 
+		/* 前回使用していたデータを開く */
+		private List<LaunchSoft> OpenPrevData()
+		{
+			DialogResult dr;
+			List<LaunchSoft> llist = new List<LaunchSoft>();
+			string myDirectory = Directory.GetCurrentDirectory();
+			string xmlFile = "\\XmlFile\\";
+
+			dr = MessageBox.Show("前回使用していたデータを開きますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+			if(dr == DialogResult.No)
+			{
+				return new List<LaunchSoft>();
+			}
+			/* 選択したファイルをデシリアライズしてリストに格納する。 */
+			XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+			try
+			{
+				if (File.Exists(myDirectory + xmlFile + prevData))
+				{
+					StreamReader sr = new StreamReader(myDirectory + xmlFile + prevData, new UTF8Encoding(false));
+					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+					sr.Close();
+				}
+				else
+				{
+					llist = null;
+				}
+			}
+			catch (NotSupportedException nse)
+			{
+				llist = new List<LaunchSoft>()
+				{
+					new LaunchSoft()
+					{
+						isLaunch = false,
+						FileName = "できない",
+						FilePath = nse.ToString()
+					}
+				};
+			}
+
+			return llist;
+		}
+		
 	}
     
 }

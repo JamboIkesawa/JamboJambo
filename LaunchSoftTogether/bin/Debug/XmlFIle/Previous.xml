@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLaunchSoft xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>Code.exe</FileName>
+    <FilePath>C:\Users\BP-022\AppData\Local\Programs\Microsoft VS Code\Code.exe</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>Launch Soft Together.exe</FileName>
+    <FilePath>C:\Users\BP-022\Desktop\資料\Debug\Launch Soft Together.exe</FilePath>
+  </LaunchSoft>
+</ArrayOfLaunchSoft>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLaunchSoft xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>slack.exe</FileName>
+    <FilePath>C:\Users\BP-022\AppData\Local\slack\slack.exe</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>Code.exe</FileName>
+    <FilePath>C:\Users\BP-022\AppData\Local\Programs\Microsoft VS Code\Code.exe</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>STN日報_201910_蒲川.xlsx</FileName>
+    <FilePath>\\192.168.1.11\share\00_社内管理資料\00_日報\201910\STN日報_201910_蒲川.xlsx</FilePath>
+  </LaunchSoft>
+</ArrayOfLaunchSoft>

@@ -56,3 +56,26 @@
     ＊デフォルトリスト
         ソフト実行時にデフォルトに設定したリストを設定する
     ＊
+
+
+今ある関数
+//Main
+public Main()
+
+//Button Control
+private void button_Add_Click()
+private void button_Edit_Click()
+private void button_Launch_Click()
+private void button_Close_Click()
+private void button_Delete_Click()
+private void button_Save_Click()
+private void button_ChooseList_Click()
+
+//Data Control
+private void AddData(LaunchSoft doc)
+private void LoadData()
+private void UpdateData()
+
+//Data Write/Read Control
+private void SerializeXML(List<LaunchSoft> lList)
+private List<LaunchSoft> DeserializeXML()
