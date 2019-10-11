@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLaunchSoft xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LaunchSoft>
+    <isLaunch>false</isLaunch>
+    <FileName>【内部設計vba】48_(石炭)入着管理 インプット表(ALL)　反映.xlsx</FileName>
+    <FilePath>C:\SVN\stn-plus\pj_auto_create_rmb\trunk\03_内部設計\01_作成中\【内部設計vba】48_(石炭)入着管理 インプット表(ALL)　反映.xlsx</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>false</isLaunch>
+    <FileName>Code.exe</FileName>
+    <FilePath>C:\Users\BP-022\AppData\Local\Programs\Microsoft VS Code\Code.exe</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>false</isLaunch>
+    <FileName>【原料予算業務自動化】QA表(内部設計)_20191008.xlsx</FileName>
+    <FilePath>C:\SVN\stn-plus\pj_auto_create_rmb\trunk\03_内部設計\99_QA表\【原料予算業務自動化】QA表(内部設計)_20191008.xlsx</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>【原料予算業務自動化】WBS(線表)-4959.xlsx</FileName>
+    <FilePath>C:\Users\BP-022\Desktop\資料\原料予算業務自動化\内部設計書\【原料予算業務自動化】WBS(線表)-4959.xlsx</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>【内部設計vba】18-1_(石炭)配船想定 配船データ　反映 .xlsx</FileName>
+    <FilePath>C:\SVN\stn-plus\pj_auto_create_rmb\trunk\03_内部設計\01_作成中\【内部設計vba】18-1_(石炭)配船想定 配船データ　反映 .xlsx</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>03-2 システム機能一覧_ver1.1.xlsx</FileName>
+    <FilePath>C:\SVN\stn-plus\pj_auto_create_rmb\trunk\90_受領資料\20190807\02.外設資料\02.ＩＰＯ\03-2 システム機能一覧_ver1.1.xlsx</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>03-2 システム機能一覧_ver1.1.xlsx</FileName>
+    <FilePath>C:\SVN\stn-plus\pj_auto_create_rmb\trunk\90_受領資料\20190807\02.外設資料\02.ＩＰＯ\03-2 システム機能一覧_ver1.1.xlsx</FilePath>
+  </LaunchSoft>
+</ArrayOfLaunchSoft>
