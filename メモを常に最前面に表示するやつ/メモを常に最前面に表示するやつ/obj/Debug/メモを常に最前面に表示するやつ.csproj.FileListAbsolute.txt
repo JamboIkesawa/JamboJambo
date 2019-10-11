@@ -1,0 +1,9 @@
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\bin\Debug\メモを常に最前面に表示するやつ.exe.config
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\bin\Debug\メモを常に最前面に表示するやつ.exe
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\bin\Debug\メモを常に最前面に表示するやつ.pdb
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\obj\Debug\メモを常に最前面に表示するやつ.csprojResolveAssemblyReference.cache
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\obj\Debug\メモを常に最前面に表示するやつ.Form1.resources
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\obj\Debug\メモを常に最前面に表示するやつ.Properties.Resources.resources
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\obj\Debug\メモを常に最前面に表示するやつ.csproj.GenerateResource.Cache
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\obj\Debug\メモを常に最前面に表示するやつ.exe
+C:\Users\BP-022\Desktop\資料\git\退避\メモを常に最前面に表示するやつ\メモを常に最前面に表示するやつ\obj\Debug\メモを常に最前面に表示するやつ.pdb
