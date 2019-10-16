@@ -32,6 +32,7 @@ namespace Launch_Soft_Together
 			dataGridView_Current.DataSource = liSoft;
 			ChangeGridViewStyle(dataGridView_Prev);
 			UpdateData();
+			ChangeGridViewStyle_AddDeleteButton();
 		}
 
 		/* 起動するファイルを追加する */
@@ -165,16 +166,17 @@ namespace Launch_Soft_Together
 		private void dataGridView_Current_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			DataGridView dgv = (DataGridView)sender;
-			/*if(dgv.Columns[e.ColumnIndex].Name == "ボタン")
+			// クリックしたセルの列名がボタンならば
+			// (他のセルをクリックしても削除されないように)
+			if(dgv.Columns[e.ColumnIndex].Name == "ボタン")
 			{
 				liSoft.RemoveRange(e.RowIndex, 1);
 				UpdateData();
-			}*/
-			liSoft.RemoveRange(e.RowIndex, 1);
-			UpdateData();
+			}
 		}
 
 		/* データを追加する(重複があるかチェック) */
+		// TODO: 新規ボタンを追加したときにいったん新規ボタンの行を削除してデータ追加後、新規ボタン追加としてみる。
 		private void AddData(LaunchSoft doc)
 		{
 			liSoft.Add(doc);
@@ -192,29 +194,39 @@ namespace Launch_Soft_Together
 		}
 
 		/* データを更新する */
+		// TODO: 呼ばれるたびにリストの形が崩れるので形を考える。
 		private void UpdateData()
 		{
 			// リストを更新する
 			dataGridView_Current.DataSource = null;
 			dataGridView_Current.DataSource = liSoft;
+			
+			ChangeGridViewStyle(dataGridView_Current);
+		}
 
+		// DataGridView_Currentに削除ボタンを追加する。
+		// TODO: 呼ばれるたびにリストの形が崩れるので形を考える。
+		private void ChangeGridViewStyle_AddDeleteButton()
+		{
 			DataGridViewButtonColumn col = new DataGridViewButtonColumn();
 			col.Name = "ボタン";
 			col.UseColumnTextForButtonValue = true;
 			col.Text = "削除";
 			col.Width = 40;
 			dataGridView_Current.Columns.Add(col);
-			ChangeGridViewStyle(dataGridView_Current);
 		}
 
-		// DataGridView_Currentに削除ボタンを追加する。
-		private void ChangeGridViewStyle_AddDeleteButton()
+		// TODO: 新規作成ボタン追加処理
+		private void ChangeGridViewStyle_AddAddButton()
 		{
-			
+
 		}
 
 		private void ChangeGridViewStyle(DataGridView changeGrid)
 		{
+			// 列ヘッダーを非表示にする
+			changeGrid.RowHeadersVisible = false;
+
 			// ユーザーが行幅を調整できないようにする。
 			changeGrid.AllowUserToResizeRows = false;
 
