@@ -11,6 +11,36 @@ C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パス�
 C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\System.Runtime.Serialization.Primitives.dll
 C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\YamlDotNet.NetCore.dll
 C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.CopyComplete
-C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.exe.config
-C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.exe
-C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.pdb
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\Newtonsoft.Json.dll
+C:\Users\cvbgh\OneDrive\デスクトップ\プログラム\Visual Studio\パスワード管理ソフト\bin\Debug\Newtonsoft.Json.xml
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csprojResolveAssemblyReference.cache
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.Form1.resources
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.Properties.Resources.resources
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.GenerateResource.cache
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.CoreCompileInputs.cache
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.exe
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.pdb
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.exe.config
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.exe
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.pdb
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\bin\Debug\Newtonsoft.Json.dll
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\bin\Debug\System.Runtime.Serialization.Primitives.dll
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\bin\Debug\YamlDotNet.NetCore.dll
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\bin\Debug\Newtonsoft.Json.xml
+C:\Users\cvbgh\source\repos\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.CopyComplete
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.exe.config
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.exe
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\bin\Debug\パスワード管理ソフト.pdb
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\bin\Debug\Newtonsoft.Json.dll
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\bin\Debug\System.Runtime.Serialization.Primitives.dll
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\bin\Debug\YamlDotNet.NetCore.dll
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\bin\Debug\Newtonsoft.Json.xml
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.Properties.Resources.resources
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.GenerateResource.cache
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.CoreCompileInputs.cache
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csproj.CopyComplete
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.exe
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.pdb
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.csprojAssemblyReference.cache
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.MainForm.resources
+C:\Users\cvbgh\jambojambo\パスワード管理ソフト\obj\Debug\パスワード管理ソフト.OutputForm.resources
