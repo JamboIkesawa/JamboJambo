@@ -8,11 +8,11 @@
   <LaunchSoft>
     <isLaunch>true</isLaunch>
     <FileName>slack.exe</FileName>
-    <FilePath>C:\Users\BP-022\AppData\Local\slack\slack.exe</FilePath>
+    <FilePath>C:\Users\xxxxxxxxxxxxxx\AppData\Local\slack\slack.exe</FilePath>
   </LaunchSoft>
   <LaunchSoft>
     <isLaunch>true</isLaunch>
     <FileName>Code.exe</FileName>
-    <FilePath>C:\Users\BP-022\AppData\Local\Programs\Microsoft VS Code\Code.exe</FilePath>
+    <FilePath>C:\Users\xxxxxxxxxxxxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe</FilePath>
   </LaunchSoft>
 </ArrayOfLaunchSoft>
