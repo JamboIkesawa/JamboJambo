@@ -18,6 +18,13 @@ namespace Launch_Soft_Together
 		public string FilePath { get; set; }
 	}
 
+	public class Config
+	{
+		public bool isDuplicatePermission { get; set; }
+		public bool isDeleteConfirm { get; set; }
+		public bool isOpenPrevData { get; set; }
+	}
+	
 	/*public class LaunchSoftForDisplay
 	{
 		public bool isLaunch { get; set; }

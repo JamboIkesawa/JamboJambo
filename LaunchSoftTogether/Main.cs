@@ -21,20 +21,18 @@ namespace Launch_Soft_Together
 		string thisDirectory = "";
 		string xmlFile = "\\XmlFile\\";
 		string prevData = "Previous.xml";
+		string configFile = "\\config\\";
+		string configData = "config.xml";
 
 		/* フォームを開いたときにする処理 */
 		public Main()
 		{
 			InitializeComponent();
 
-			/*if(checkBox_Message.Checked == true)
-			{
-				MessageBox.Show("起動できません", "残当", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				this.Close();
-				return;
-			}*/
-
 			thisDirectory = Directory.GetCurrentDirectory() + xmlFile;
+
+			OpenConfig();
+
 			if (checkBox_LaunchConfirm.Checked == true)
 			{
 				liSoft = OpenPrevData();
@@ -48,7 +46,6 @@ namespace Launch_Soft_Together
 			UpdateData();
 			ChangeGridViewStyle(dataGridView_Prev);
 			ChangeGridViewStyle(dataGridView_Current);
-			//ChangeGridViewStyle_AddDeleteButton();
 		}
 
 		/* 起動するファイルを追加する */
@@ -60,7 +57,7 @@ namespace Launch_Soft_Together
 			OpenFileDialog oFD = new OpenFileDialog();
 			oFD.Title = "追加するファイルを選択してください";
 			// TODO:自分のパソコンしか使えないので、他の環境でも使えるようにパス部分を変更。(C:\が無難)
-			oFD.InitialDirectory = "C:\\Users\\BP-022\\Desktop\\";
+			oFD.InitialDirectory = "C:\\Users\\"+Environment.UserName+"\\Desktop\\";
 			oFD.FileName = "";
 			oFD.Filter = "すべてのファイル|*.*";
 			oFD.FilterIndex = 1;
@@ -72,7 +69,7 @@ namespace Launch_Soft_Together
 			if (oFD.ShowDialog() == DialogResult.OK)
 			{
 				doc.FileName = Path.GetFileName(oFD.FileName);  //ファイル名のみを取得する
-				doc.FilePath = oFD.FileName;                    //ファイルのアドレスを取得する
+				doc.FilePath = oFD.FileName;                    //ファイルパスを取得する
 				AddData(doc);
 				UpdateData();
 			}
@@ -80,14 +77,7 @@ namespace Launch_Soft_Together
 			oFD.Reset();
 			oFD.Dispose();
 		}
-
-		/* リスト管理画面を開く */
-		private void button_Edit_Click(object sender, EventArgs e)
-		{
-			ListManagement lmForm = new ListManagement();
-			lmForm.Show();
-		}
-
+		
 		/* リストのソフトを起動する */
 		private void button_Launch_Click(object sender, EventArgs e)
 		{
@@ -133,6 +123,7 @@ namespace Launch_Soft_Together
 		private void button_Close_Click(object sender, EventArgs e)
 		{
 			SaveCurrentData(liSoft);
+			SaveConfig();
 			Close();
 		}
 
@@ -199,6 +190,23 @@ namespace Launch_Soft_Together
 				liSoft.RemoveRange(e.RowIndex, 1);
 				UpdateData();
 			}
+
+			richTextBox_CurrentPath.Text = liSoft[e.RowIndex].FilePath;
+		}
+
+		/* DataGridViewで削除ボタンを押された行のデータを削除する。 */
+		private void dataGridView_Prev_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridView dgv = (DataGridView)sender;
+			// クリックしたセルの列名がボタンならば
+			// (他のセルをクリックしても削除されないように)
+			if (dgv.Columns[e.ColumnIndex].Name == "ボタン")
+			{
+				liSoft.RemoveRange(e.RowIndex, 1);
+				UpdateData();
+			}
+
+			richTextBox_PrevPath.Text = liSoft[e.RowIndex].FilePath;
 		}
 
 		/* データを追加する(重複があるかチェック) */
@@ -349,6 +357,24 @@ namespace Launch_Soft_Together
 		}
 
 		/// <summary>
+		/// フォームクローズ時にチェックボックスの設定を保存する。
+		/// </summary>
+		private void SaveConfig()
+		{
+			Config config = new Config();
+			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
+			StreamWriter sw = new StreamWriter(thisDirectory + configFile + configData, false, new UTF8Encoding(false));
+
+			config.isDuplicatePermission = checkBox_DuplicateCheck.Checked;
+			config.isDeleteConfirm = checkBox_DeleteConfirm.Checked;
+			config.isOpenPrevData = checkBox_LaunchConfirm.Checked;
+
+			xmlSer.Serialize(sw, config);
+			sw.Close();
+
+		}
+
+		/// <summary>
 		/// XMLファイルからリストを開く
 		/// </summary>
 		/// <returns>XMLから開いたリスト</returns>
@@ -450,6 +476,33 @@ namespace Launch_Soft_Together
 			}
 
 			return llist;
+		}
+
+		private void OpenConfig()
+		{
+			Config config = new Config();
+			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
+			try
+			{
+				if(File.Exists(thisDirectory + configFile + configData))
+				{
+					StreamReader sr = new StreamReader(thisDirectory + configFile + configData, new UTF8Encoding(false));
+					config = (Config)xmlSer.Deserialize(sr);
+					sr.Close();
+				}
+				else
+				{
+					config = new Config();
+				}
+			}
+			catch(NotSupportedException nse)
+			{
+				config = new Config();
+			}
+
+			checkBox_DuplicateCheck.Checked = config.isDuplicatePermission;
+			checkBox_DeleteConfirm.Checked = config.isDeleteConfirm;
+			checkBox_LaunchConfirm.Checked = config.isOpenPrevData;
 		}
 
 		// リスト内の重複をチェックする。
