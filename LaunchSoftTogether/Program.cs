@@ -17,6 +17,7 @@ namespace Launch_Soft_Together
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new Main());
+			//Application.Run(new FileSelection());
 		}
 	}
 }

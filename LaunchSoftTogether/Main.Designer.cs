@@ -38,6 +38,8 @@
 			this.button_Save = new System.Windows.Forms.Button();
 			this.label_Current = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.label_CurrentPath = new System.Windows.Forms.Label();
+			this.richTextBox_CurrentPath = new System.Windows.Forms.RichTextBox();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.checkBox_LaunchConfirm = new System.Windows.Forms.CheckBox();
 			this.checkBox_DeleteConfirm = new System.Windows.Forms.CheckBox();
@@ -45,10 +47,8 @@
 			this.dataGridView_Prev = new System.Windows.Forms.DataGridView();
 			this.label_Previous = new System.Windows.Forms.Label();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.richTextBox_CurrentPath = new System.Windows.Forms.RichTextBox();
-			this.richTextBox_PrevPath = new System.Windows.Forms.RichTextBox();
-			this.label_CurrentPath = new System.Windows.Forms.Label();
 			this.label_PrevPath = new System.Windows.Forms.Label();
+			this.richTextBox_PrevPath = new System.Windows.Forms.RichTextBox();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_Current)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.panel3.SuspendLayout();
@@ -149,6 +149,24 @@
 			this.panel1.Size = new System.Drawing.Size(215, 293);
 			this.panel1.TabIndex = 5;
 			// 
+			// label_CurrentPath
+			// 
+			this.label_CurrentPath.AutoSize = true;
+			this.label_CurrentPath.Location = new System.Drawing.Point(8, 211);
+			this.label_CurrentPath.Name = "label_CurrentPath";
+			this.label_CurrentPath.Size = new System.Drawing.Size(58, 12);
+			this.label_CurrentPath.TabIndex = 6;
+			this.label_CurrentPath.Text = "ファイルパス";
+			// 
+			// richTextBox_CurrentPath
+			// 
+			this.richTextBox_CurrentPath.Location = new System.Drawing.Point(8, 229);
+			this.richTextBox_CurrentPath.Name = "richTextBox_CurrentPath";
+			this.richTextBox_CurrentPath.ReadOnly = true;
+			this.richTextBox_CurrentPath.Size = new System.Drawing.Size(198, 51);
+			this.richTextBox_CurrentPath.TabIndex = 5;
+			this.richTextBox_CurrentPath.Text = "";
+			// 
 			// panel3
 			// 
 			this.panel3.Controls.Add(this.checkBox_LaunchConfirm);
@@ -201,6 +219,7 @@
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
 			this.dataGridView_Prev.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dataGridView_Prev.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+			this.dataGridView_Prev.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView_Prev.Location = new System.Drawing.Point(9, 29);
 			this.dataGridView_Prev.MultiSelect = false;
 			this.dataGridView_Prev.Name = "dataGridView_Prev";
@@ -231,14 +250,14 @@
 			this.panel2.Size = new System.Drawing.Size(223, 293);
 			this.panel2.TabIndex = 6;
 			// 
-			// richTextBox_CurrentPath
+			// label_PrevPath
 			// 
-			this.richTextBox_CurrentPath.Location = new System.Drawing.Point(8, 229);
-			this.richTextBox_CurrentPath.Name = "richTextBox_CurrentPath";
-			this.richTextBox_CurrentPath.ReadOnly = true;
-			this.richTextBox_CurrentPath.Size = new System.Drawing.Size(198, 51);
-			this.richTextBox_CurrentPath.TabIndex = 5;
-			this.richTextBox_CurrentPath.Text = "";
+			this.label_PrevPath.AutoSize = true;
+			this.label_PrevPath.Location = new System.Drawing.Point(7, 211);
+			this.label_PrevPath.Name = "label_PrevPath";
+			this.label_PrevPath.Size = new System.Drawing.Size(58, 12);
+			this.label_PrevPath.TabIndex = 7;
+			this.label_PrevPath.Text = "ファイルパス";
 			// 
 			// richTextBox_PrevPath
 			// 
@@ -248,24 +267,6 @@
 			this.richTextBox_PrevPath.Size = new System.Drawing.Size(198, 51);
 			this.richTextBox_PrevPath.TabIndex = 6;
 			this.richTextBox_PrevPath.Text = "";
-			// 
-			// label_CurrentPath
-			// 
-			this.label_CurrentPath.AutoSize = true;
-			this.label_CurrentPath.Location = new System.Drawing.Point(8, 211);
-			this.label_CurrentPath.Name = "label_CurrentPath";
-			this.label_CurrentPath.Size = new System.Drawing.Size(58, 12);
-			this.label_CurrentPath.TabIndex = 6;
-			this.label_CurrentPath.Text = "ファイルパス";
-			// 
-			// label_PrevPath
-			// 
-			this.label_PrevPath.AutoSize = true;
-			this.label_PrevPath.Location = new System.Drawing.Point(7, 211);
-			this.label_PrevPath.Name = "label_PrevPath";
-			this.label_PrevPath.Size = new System.Drawing.Size(58, 12);
-			this.label_PrevPath.TabIndex = 7;
-			this.label_PrevPath.Text = "ファイルパス";
 			// 
 			// Main
 			// 

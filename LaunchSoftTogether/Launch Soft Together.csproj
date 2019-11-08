@@ -46,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonClass.cs" />
+    <Compile Include="FileSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileSelection.Designer.cs">
+      <DependentUpon>FileSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FileSelection.resx">
+      <DependentUpon>FileSelection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

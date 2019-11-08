@@ -6,9 +6,28 @@ using System.Threading.Tasks;
 
 namespace Launch_Soft_Together
 {
+	
 	public class CommonClass
 	{
+		/*
+		public string xmlFile = "\\XmlFile\\";
+		public string configFile = "\\config\\";
+		public string prevData = "Previous.xml";
+		public string configData = "config.xml";
+		public string myDirectory = "";
+		*/
 
+		bool kore = false;
+
+		public void changebool()
+		{
+			kore = !kore;
+		}
+
+		public bool getbool()
+		{
+			return kore;
+		}
 	}
 
 	public class LaunchSoft

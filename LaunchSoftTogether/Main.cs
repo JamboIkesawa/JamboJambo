@@ -27,10 +27,14 @@ namespace Launch_Soft_Together
 		/* フォームを開いたときにする処理 */
 		public Main()
 		{
+
+			FileSelection frmFS = new FileSelection();
+			frmFS.Show();
+			
 			InitializeComponent();
 
 			thisDirectory = Directory.GetCurrentDirectory() + xmlFile;
-
+			
 			OpenConfig();
 
 			if (checkBox_LaunchConfirm.Checked == true)
