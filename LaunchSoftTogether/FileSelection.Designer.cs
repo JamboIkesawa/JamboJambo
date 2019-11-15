@@ -75,7 +75,10 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FileSelection";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
 			this.Text = "開くファイルを選択";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FileSelection_FormClosing);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_FileList)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

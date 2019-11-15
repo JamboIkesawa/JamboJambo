@@ -13,11 +13,14 @@ namespace Launch_Soft_Together
 	public partial class FileSelection : Form
 	{
 		CommonClass cc = new CommonClass();
+		LaunchSoft lisoft = new LaunchSoft();
+		Config config = new Config();
 
 		public FileSelection()
 		{
 			InitializeComponent();
-
+			checkBox_LaunchConfirm.Checked = config.PrevData;
+			this.TopMost = true;
 		}
 
 		private void button_ListOpen_Click(object sender, EventArgs e)
@@ -27,7 +30,12 @@ namespace Launch_Soft_Together
 
 		private void dataGridView_FileList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			cc.changebool();
+			config.PrevData = !config.PrevData;
+		}
+
+		private void FileSelection_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			this.TopMost = false;
 		}
 	}
 }

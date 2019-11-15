@@ -7,46 +7,92 @@ using System.Threading.Tasks;
 namespace Launch_Soft_Together
 {
 	
+	public class GlobalVariables
+	{
+		private static string xmlFile = "";
+		private static string configFile = "";
+		private static string prevData = "";
+		private static string configData = "";
+		private static string myDirectory = "";
+
+		public string Xml
+		{
+			get{ return xmlFile; }
+			set{ xmlFile = value; }
+		}
+		public string Config
+		{
+			get { return configFile; }
+			set { configFile = value; }
+		}
+		public string PreviousName
+		{
+			get { return prevData; }
+			set { prevData = value; }
+		}
+		public string ConfigName
+		{
+			get { return configData; }
+			set { configData = value; }
+		}
+		public string MyDirectory
+		{
+			get { return myDirectory; }
+			set { myDirectory = value; }
+		}
+
+	}
+
+
 	public class CommonClass
 	{
-		/*
-		public string xmlFile = "\\XmlFile\\";
-		public string configFile = "\\config\\";
-		public string prevData = "Previous.xml";
-		public string configData = "config.xml";
-		public string myDirectory = "";
-		*/
-
-		bool kore = false;
-
-		public void changebool()
-		{
-			kore = !kore;
-		}
-
-		public bool getbool()
-		{
-			return kore;
-		}
+		
 	}
 
 	public class LaunchSoft
 	{
-		public bool isLaunch { get; set; }
-		public string FileName { get; set; }
-		public string FilePath { get; set; }
+		private static bool isLaunch;
+		private static string FileName;
+		private static string FilePath;
+
+		public bool Launch
+		{
+			get { return isLaunch; }
+			set { isLaunch = value; }
+		}
+		public string Name
+		{
+			get { return FileName; }
+			set { FileName = value; }
+		}
+		public string Path
+		{
+			get { return FilePath; }
+			set { FilePath = value; }
+		}
 	}
 
 	public class Config
 	{
-		public bool isDuplicatePermission { get; set; }
-		public bool isDeleteConfirm { get; set; }
-		public bool isOpenPrevData { get; set; }
+		private static bool isDuplicatePermission;
+		private static bool isDeleteConfirm;
+		private static bool isOpenPrevData;
+
+		public bool Duplicate
+		{
+			get { return isDuplicatePermission; }
+			set { isDuplicatePermission = value; }
+		}
+		public bool Delete
+		{
+			get { return isDeleteConfirm; }
+			set { isDeleteConfirm = value; }
+		}
+		public bool PrevData
+		{
+			get { return isOpenPrevData; }
+			set { isOpenPrevData = value; }
+		}
 	}
 	
-	/*public class LaunchSoftForDisplay
-	{
-		public bool isLaunch { get; set; }
-		public bool FileName { get; set; }
-	}*/
 }

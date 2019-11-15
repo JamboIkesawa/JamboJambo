@@ -56,7 +56,7 @@ namespace Launch_Soft_Together
 		private void button_Add_Click(object sender, EventArgs e)
 		{
 			LaunchSoft doc = new LaunchSoft();
-			doc.isLaunch = true;
+			doc.Launch = true;
 
 			OpenFileDialog oFD = new OpenFileDialog();
 			oFD.Title = "追加するファイルを選択してください";
@@ -72,8 +72,8 @@ namespace Launch_Soft_Together
 			oFD.ReadOnlyChecked = true;
 			if (oFD.ShowDialog() == DialogResult.OK)
 			{
-				doc.FileName = Path.GetFileName(oFD.FileName);  //ファイル名のみを取得する
-				doc.FilePath = oFD.FileName;                    //ファイルパスを取得する
+				doc.Name = Path.GetFileName(oFD.FileName);  //ファイル名のみを取得する
+				doc.Path = oFD.FileName;                    //ファイルパスを取得する
 				AddData(doc);
 				UpdateData();
 			}
@@ -95,9 +95,9 @@ namespace Launch_Soft_Together
 					{
 						using (Process pro = new Process())
 						{
-							if (ls.isLaunch == true)
+							if (ls.Launch == true)
 							{
-								pro.StartInfo.FileName = ls.FilePath;
+								pro.StartInfo.FileName = ls.Path;
 								pro.Start();
 							}
 						}
@@ -195,7 +195,7 @@ namespace Launch_Soft_Together
 				UpdateData();
 			}
 
-			richTextBox_CurrentPath.Text = liSoft[e.RowIndex].FilePath;
+			richTextBox_CurrentPath.Text = liSoft[e.RowIndex].Path;
 		}
 
 		/* DataGridViewで削除ボタンを押された行のデータを削除する。 */
@@ -210,7 +210,7 @@ namespace Launch_Soft_Together
 				UpdateData();
 			}
 
-			richTextBox_PrevPath.Text = liSoft[e.RowIndex].FilePath;
+			richTextBox_PrevPath.Text = liSoft[e.RowIndex].Path;
 		}
 
 		/* データを追加する(重複があるかチェック) */
@@ -369,9 +369,9 @@ namespace Launch_Soft_Together
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
 			StreamWriter sw = new StreamWriter(thisDirectory + configFile + configData, false, new UTF8Encoding(false));
 
-			config.isDuplicatePermission = checkBox_DuplicateCheck.Checked;
-			config.isDeleteConfirm = checkBox_DeleteConfirm.Checked;
-			config.isOpenPrevData = checkBox_LaunchConfirm.Checked;
+			config.Duplicate = checkBox_DuplicateCheck.Checked;
+			config.Delete = checkBox_DeleteConfirm.Checked;
+			config.PrevData = checkBox_LaunchConfirm.Checked;
 
 			xmlSer.Serialize(sw, config);
 			sw.Close();
@@ -417,9 +417,9 @@ namespace Launch_Soft_Together
 					{
 						new LaunchSoft()
 						{
-							isLaunch = false,
-							FileName = "できない",
-							FilePath = nse.ToString()
+							Launch = false,
+							Name = "できない",
+							Path = nse.ToString()
 						}
 					};
 				}
@@ -472,9 +472,9 @@ namespace Launch_Soft_Together
 				{
 					new LaunchSoft()
 					{
-						isLaunch = false,
-						FileName = "できない",
-						FilePath = nse.ToString()
+						Launch = false,
+						Name = "できない",
+						Path = nse.ToString()
 					}
 				};
 			}
@@ -504,9 +504,9 @@ namespace Launch_Soft_Together
 				config = new Config();
 			}
 
-			checkBox_DuplicateCheck.Checked = config.isDuplicatePermission;
-			checkBox_DeleteConfirm.Checked = config.isDeleteConfirm;
-			checkBox_LaunchConfirm.Checked = config.isOpenPrevData;
+			checkBox_DuplicateCheck.Checked = config.Duplicate;
+			checkBox_DeleteConfirm.Checked = config.Delete;
+			checkBox_LaunchConfirm.Checked = config.PrevData;
 		}
 
 		// リスト内の重複をチェックする。
@@ -517,7 +517,7 @@ namespace Launch_Soft_Together
 
 			foreach (LaunchSoft ls in checkList)
 			{
-				if (ls.FileName.Contains(checkData.FileName))
+				if (ls.Name.Contains(checkData.Name))
 				{
 					isDuplicate = true;
 				}
