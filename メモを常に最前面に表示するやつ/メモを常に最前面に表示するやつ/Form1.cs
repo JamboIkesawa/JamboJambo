@@ -57,7 +57,7 @@ namespace メモを常に最前面に表示するやつ
 			sfd = FileSave();
 			if(sfd.ShowDialog() == DialogResult.OK)
 			{
-				stream = sfd.FileName;
+				stream = sfd.OpenFile();
 				StreamWriter sw = new StreamWriter(stream);
 			}
 			else
@@ -67,6 +67,11 @@ namespace メモを常に最前面に表示するやつ
 			}
 		}
 
+		/// <summary>
+		/// 書き込みの可否を入れ替える。
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void checkBox_ReadOnly_CheckedChanged(object sender, EventArgs e)
 		{
 			// チェックされたらテキストボックスを読み込みのみにする。
