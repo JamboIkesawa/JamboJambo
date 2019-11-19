@@ -18,11 +18,7 @@ namespace Launch_Soft_Together
 	{
 		List<LaunchSoft> liSoft = new List<LaunchSoft>();
 		//List<LaunchSoftForDisplay> lifdSoft = new List<LaunchSoftForDisplay>();
-		string thisDirectory = "";
-		string xmlFile = "\\XmlFile\\";
-		string prevData = "Previous.xml";
-		string configFile = "\\config\\";
-		string configData = "config.xml";
+		GlobalVariables dv = new GlobalVariables();
 
 		/* フォームを開いたときにする処理 */
 		public Main()
@@ -33,7 +29,7 @@ namespace Launch_Soft_Together
 			
 			InitializeComponent();
 
-			thisDirectory = Directory.GetCurrentDirectory() + xmlFile;
+			dv.MyDirectory = Directory.GetCurrentDirectory();
 			
 			OpenConfig();
 
@@ -311,7 +307,7 @@ namespace Launch_Soft_Together
 			/* ダイアログを表示して開きたいリストを選択する */
 			SaveFileDialog sFD = new SaveFileDialog();
 			sFD.Title = "セーブします";
-			sFD.InitialDirectory = thisDirectory;
+			sFD.InitialDirectory = dv.MyDirectory;
 			sFD.FileName = "";
 			sFD.Filter = "XMLファイル|*.xml";
 			sFD.FilterIndex = 1;
@@ -352,7 +348,7 @@ namespace Launch_Soft_Together
 			{
 				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 
-				StreamWriter sw = new StreamWriter(thisDirectory + prevData, false, new UTF8Encoding(false));
+				StreamWriter sw = new StreamWriter(dv.GetPreviousFilePass(), false, new UTF8Encoding(false));
 
 				xmlSer.Serialize(sw, lList);
 				sw.Close();
@@ -367,7 +363,7 @@ namespace Launch_Soft_Together
 		{
 			Config config = new Config();
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
-			StreamWriter sw = new StreamWriter(thisDirectory + configFile + configData, false, new UTF8Encoding(false));
+			StreamWriter sw = new StreamWriter(dv.GetConfigPass(), false, new UTF8Encoding(false));
 
 			config.Duplicate = checkBox_DuplicateCheck.Checked;
 			config.Delete = checkBox_DeleteConfirm.Checked;
@@ -390,7 +386,7 @@ namespace Launch_Soft_Together
 			/* ダイアログを表示して開きたいリストを選択する */
 			OpenFileDialog oFD = new OpenFileDialog();
 			oFD.Title = "オープンするファイルを選択してください";
-			oFD.InitialDirectory = thisDirectory;
+			oFD.InitialDirectory = dv.MyDirectory;
 			oFD.FileName = "";
 			oFD.Filter = "XMLファイル|*.xml";
 			oFD.FilterIndex = 1;
@@ -455,9 +451,9 @@ namespace Launch_Soft_Together
 			XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 			try
 			{
-				if (File.Exists(thisDirectory + prevData))
+				if (File.Exists(dv.GetPreviousFilePass()))
 				{
-					StreamReader sr = new StreamReader(thisDirectory + prevData, new UTF8Encoding(false));
+					StreamReader sr = new StreamReader(dv.GetPreviousFilePass(), new UTF8Encoding(false));
 					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
 					sr.Close();
 				}
@@ -488,9 +484,9 @@ namespace Launch_Soft_Together
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
 			try
 			{
-				if(File.Exists(thisDirectory + configFile + configData))
+				if(File.Exists(dv.GetConfigPass()))
 				{
-					StreamReader sr = new StreamReader(thisDirectory + configFile + configData, new UTF8Encoding(false));
+					StreamReader sr = new StreamReader(dv.GetConfigPass(), new UTF8Encoding(false));
 					config = (Config)xmlSer.Deserialize(sr);
 					sr.Close();
 				}

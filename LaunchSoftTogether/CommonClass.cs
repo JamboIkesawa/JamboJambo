@@ -9,10 +9,10 @@ namespace Launch_Soft_Together
 	
 	public class GlobalVariables
 	{
-		private static string xmlFile = "";
-		private static string configFile = "";
-		private static string prevData = "";
-		private static string configData = "";
+		private static string xmlFile = "\\XmlFile\\";
+		private static string configFile = "\\config\\";
+		private static string prevData = "Previous.xml";
+		private static string configData = "config.xml";
 		private static string myDirectory = "";
 
 		public string Xml
@@ -40,7 +40,14 @@ namespace Launch_Soft_Together
 			get { return myDirectory; }
 			set { myDirectory = value; }
 		}
-
+		public string GetPreviousFilePass()
+		{
+			return myDirectory + xmlFile + prevData;
+		}
+		public string GetConfigPass()
+		{
+			return myDirectory + xmlFile + configFile + configData;
+		}
 	}
 
 
