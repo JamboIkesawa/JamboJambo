@@ -18,20 +18,16 @@ namespace Launch_Soft_Together
 	{
 		List<LaunchSoft> liSoft = new List<LaunchSoft>();
 		//List<LaunchSoftForDisplay> lifdSoft = new List<LaunchSoftForDisplay>();
-		GlobalVariables dv = new GlobalVariables();
+		GlobalVariables gv = new GlobalVariables();
+		CommonClass cc = new CommonClass();
 
 		/* フォームを開いたときにする処理 */
 		public Main()
 		{
-
-			FileSelection frmFS = new FileSelection();
-			frmFS.Show();
 			
 			InitializeComponent();
-
-			dv.MyDirectory = Directory.GetCurrentDirectory();
 			
-			OpenConfig();
+			cc.OpenConfig();
 
 			if (checkBox_LaunchConfirm.Checked == true)
 			{
@@ -46,6 +42,11 @@ namespace Launch_Soft_Together
 			UpdateData();
 			ChangeGridViewStyle(dataGridView_Prev);
 			ChangeGridViewStyle(dataGridView_Current);
+		}
+
+		private void FrmFS_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			throw new NotImplementedException();
 		}
 
 		/* 起動するファイルを追加する */
@@ -232,17 +233,6 @@ namespace Launch_Soft_Together
 			
 		}
 
-		/* 保存情報があるときに使う。 */
-		private void LoadData()
-		{
-			/* リストが無いなら何もしない */
-			if (liSoft.Count < 1)
-			{
-				return;
-			}
-			UpdateData();
-		}
-
 		/* データを更新する */
 		// TODO: 呼ばれるたびにリストの形が崩れるので形を考える。
 		private void UpdateData()
@@ -307,7 +297,7 @@ namespace Launch_Soft_Together
 			/* ダイアログを表示して開きたいリストを選択する */
 			SaveFileDialog sFD = new SaveFileDialog();
 			sFD.Title = "セーブします";
-			sFD.InitialDirectory = dv.MyDirectory;
+			sFD.InitialDirectory = gv.MyDirectory;
 			sFD.FileName = "";
 			sFD.Filter = "XMLファイル|*.xml";
 			sFD.FilterIndex = 1;
@@ -348,7 +338,7 @@ namespace Launch_Soft_Together
 			{
 				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 
-				StreamWriter sw = new StreamWriter(dv.GetPreviousFilePass(), false, new UTF8Encoding(false));
+				StreamWriter sw = new StreamWriter(gv.GetPreviousFilePass(), false, new UTF8Encoding(false));
 
 				xmlSer.Serialize(sw, lList);
 				sw.Close();
@@ -363,7 +353,7 @@ namespace Launch_Soft_Together
 		{
 			Config config = new Config();
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
-			StreamWriter sw = new StreamWriter(dv.GetConfigPass(), false, new UTF8Encoding(false));
+			StreamWriter sw = new StreamWriter(gv.GetConfigPass(), false, new UTF8Encoding(false));
 
 			config.Duplicate = checkBox_DuplicateCheck.Checked;
 			config.Delete = checkBox_DeleteConfirm.Checked;
@@ -386,7 +376,7 @@ namespace Launch_Soft_Together
 			/* ダイアログを表示して開きたいリストを選択する */
 			OpenFileDialog oFD = new OpenFileDialog();
 			oFD.Title = "オープンするファイルを選択してください";
-			oFD.InitialDirectory = dv.MyDirectory;
+			oFD.InitialDirectory = gv.MyDirectory;
 			oFD.FileName = "";
 			oFD.Filter = "XMLファイル|*.xml";
 			oFD.FilterIndex = 1;
@@ -451,9 +441,9 @@ namespace Launch_Soft_Together
 			XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 			try
 			{
-				if (File.Exists(dv.GetPreviousFilePass()))
+				if (File.Exists(gv.GetPreviousFilePass()))
 				{
-					StreamReader sr = new StreamReader(dv.GetPreviousFilePass(), new UTF8Encoding(false));
+					StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
 					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
 					sr.Close();
 				}
@@ -478,33 +468,6 @@ namespace Launch_Soft_Together
 			return llist;
 		}
 
-		private void OpenConfig()
-		{
-			Config config = new Config();
-			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
-			try
-			{
-				if(File.Exists(dv.GetConfigPass()))
-				{
-					StreamReader sr = new StreamReader(dv.GetConfigPass(), new UTF8Encoding(false));
-					config = (Config)xmlSer.Deserialize(sr);
-					sr.Close();
-				}
-				else
-				{
-					config = new Config();
-				}
-			}
-			catch(NotSupportedException nse)
-			{
-				config = new Config();
-			}
-
-			checkBox_DuplicateCheck.Checked = config.Duplicate;
-			checkBox_DeleteConfirm.Checked = config.Delete;
-			checkBox_LaunchConfirm.Checked = config.PrevData;
-		}
-
 		// リスト内の重複をチェックする。
 		// リストにソフトを追加するタイミングで使用。
 		private bool DuplicateCheck(List<LaunchSoft> checkList, LaunchSoft checkData)
@@ -522,5 +485,11 @@ namespace Launch_Soft_Together
 			return isDuplicate;
 		}
 
+		private void Main_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			SaveCurrentData(liSoft);
+			SaveConfig();
+			Close();
+		}
 	}
 }

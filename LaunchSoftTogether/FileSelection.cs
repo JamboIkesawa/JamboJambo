@@ -15,12 +15,15 @@ namespace Launch_Soft_Together
 		CommonClass cc = new CommonClass();
 		LaunchSoft lisoft = new LaunchSoft();
 		Config config = new Config();
+		List<XmlFiles> xmlFile = new List<XmlFiles>();
 
 		public FileSelection()
 		{
 			InitializeComponent();
+			cc.OpenConfig();
+			xmlFile = cc.OpenXmlFile();
+			dataGridView_FileList.DataSource = xmlFile;
 			checkBox_LaunchConfirm.Checked = config.PrevData;
-			this.TopMost = true;
 		}
 
 		private void button_ListOpen_Click(object sender, EventArgs e)
@@ -30,12 +33,12 @@ namespace Launch_Soft_Together
 
 		private void dataGridView_FileList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			config.PrevData = !config.PrevData;
+			
 		}
 
 		private void FileSelection_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			this.TopMost = false;
+			config.PrevData = checkBox_LaunchConfirm.Checked;
 		}
 	}
 }

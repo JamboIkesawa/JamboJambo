@@ -284,6 +284,7 @@
 			this.Controls.Add(this.button_ChooseList);
 			this.Name = "Main";
 			this.Text = "ソフトをまとめて立ち上げるソフト";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView_Current)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
