@@ -28,10 +28,10 @@ namespace Launch_Soft_Together
 			InitializeComponent();
 			
 			cc.OpenConfig();
-
+			SetConfig();
 			if (checkBox_LaunchConfirm.Checked == true)
 			{
-				liSoft = OpenPrevData();
+				liSoft = cc.OpenPrevData();
 			}
 			else
 			{
@@ -46,37 +46,25 @@ namespace Launch_Soft_Together
 
 		private void FrmFS_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
 		/* 起動するファイルを追加する */
 		private void button_Add_Click(object sender, EventArgs e)
 		{
 			LaunchSoft doc = new LaunchSoft();
+			string filepath = "";
 			doc.Launch = true;
 
-			OpenFileDialog oFD = new OpenFileDialog();
-			oFD.Title = "追加するファイルを選択してください";
-			// TODO:自分のパソコンしか使えないので、他の環境でも使えるようにパス部分を変更。(C:\が無難)
-			oFD.InitialDirectory = "C:\\Users\\"+Environment.UserName+"\\Desktop\\";
-			oFD.FileName = "";
-			oFD.Filter = "すべてのファイル|*.*";
-			oFD.FilterIndex = 1;
-			oFD.RestoreDirectory = true;
-			oFD.Multiselect = true;
-			oFD.ShowHelp = true;
-			oFD.ShowReadOnly = true;
-			oFD.ReadOnlyChecked = true;
-			if (oFD.ShowDialog() == DialogResult.OK)
+			filepath = cc.OpenDialog("追加するファイルを選択してください", gv.GetDesktopPass(), "すべてのファイル|*.*");
+			if (filepath.Length > 0)
 			{
-				doc.Name = Path.GetFileName(oFD.FileName);  //ファイル名のみを取得する
-				doc.Path = oFD.FileName;                    //ファイルパスを取得する
+				doc.Name = Path.GetFileName(filepath);  //ファイル名のみを取得する
+				doc.Path = filepath;                    //ファイルパスを取得する
 				AddData(doc);
 				UpdateData();
 			}
 
-			oFD.Reset();
-			oFD.Dispose();
 		}
 		
 		/* リストのソフトを起動する */
@@ -123,8 +111,19 @@ namespace Launch_Soft_Together
 		/* フォームを閉じる */
 		private void button_Close_Click(object sender, EventArgs e)
 		{
-			SaveCurrentData(liSoft);
-			SaveConfig();
+			cc.SaveCurrentData(liSoft);
+			cc.SaveConfig(checkBox_DuplicateCheck.Checked, 
+						  checkBox_DeleteConfirm.Checked, 
+						  checkBox_LaunchConfirm.Checked);
+			Close();
+		}
+
+		private void Main_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			cc.SaveCurrentData(liSoft);
+			cc.SaveConfig(checkBox_DuplicateCheck.Checked,
+						  checkBox_DeleteConfirm.Checked,
+						  checkBox_LaunchConfirm.Checked);
 			Close();
 		}
 
@@ -170,13 +169,13 @@ namespace Launch_Soft_Together
 		/* XMLファイルとしてリストを保存する */
 		private void button_Save_Click(object sender, EventArgs e)
 		{
-			SerializeXML(liSoft);
+			cc.SerializeXML(liSoft);
 		}
 
 		/* ダイアログからリスト(xml)を選択する */
 		private void button_ChooseList_Click(object sender, EventArgs e)
 		{
-			liSoft = DeserializeXML();
+			liSoft = cc.DeserializeXML();
 			UpdateData();
 		}
 
@@ -211,11 +210,10 @@ namespace Launch_Soft_Together
 		}
 
 		/* データを追加する(重複があるかチェック) */
-		// TODO: 新規ボタンを追加したときにいったん新規ボタンの行を削除してデータ追加後、新規ボタン追加としてみる。
 		private void AddData(LaunchSoft doc)
 		{
 			// 重複があり、かつ重複が許されていなければ
-			if (DuplicateCheck(liSoft, doc) && (checkBox_DuplicateCheck.Checked == false))
+			if (cc.DuplicateCheck(liSoft, doc) && (checkBox_DuplicateCheck.Checked == false))
 			{
 				DialogResult dr = new DialogResult();
 				dr = MessageBox.Show("既に追加されています。\n同じデータを追加してもよろしいですか？", "重複確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -242,27 +240,7 @@ namespace Launch_Soft_Together
 			dataGridView_Current.DataSource = liSoft;
 
 			ChangeGridViewStyle(dataGridView_Current);
-
-			//ChangeGridViewStyle(dataGridView_Current);
 		}
-
-		// DataGridView_Currentに削除ボタンを追加する。
-		// TODO: 呼ばれるたびにリストの形が崩れるので形を考える。
-		/*private void ChangeGridViewStyle_AddDeleteButton()
-		{
-			DataGridViewButtonColumn col = new DataGridViewButtonColumn();
-			col.Name = "ボタン";
-			col.UseColumnTextForButtonValue = true;
-			col.Text = "削除";
-			col.Width = 40;
-			dataGridView_Current.Columns.Add(col);
-		}
-
-		// TODO: 新規作成ボタン追加処理
-		private void ChangeGridViewStyle_AddAddButton()
-		{
-
-		}*/
 
 		private void ChangeGridViewStyle(DataGridView changeGrid)
 		{
@@ -290,206 +268,17 @@ namespace Launch_Soft_Together
 
 
 		}
-
-		/* リストをXMLファイルとして保存する */
-		private void SerializeXML(List<LaunchSoft> lList)
-		{
-			/* ダイアログを表示して開きたいリストを選択する */
-			SaveFileDialog sFD = new SaveFileDialog();
-			sFD.Title = "セーブします";
-			sFD.InitialDirectory = gv.MyDirectory;
-			sFD.FileName = "";
-			sFD.Filter = "XMLファイル|*.xml";
-			sFD.FilterIndex = 1;
-			sFD.RestoreDirectory = true;
-			sFD.ShowHelp = true;
-
-			if (sFD.ShowDialog() == DialogResult.OK)
-			{
-				//filePath = sFD.FileName;
-
-				/* 選択したファイルをデシリアライズしてリストに格納する。 */
-				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
-
-				StreamWriter sw = new StreamWriter(sFD.FileName, false, new UTF8Encoding(false));
-
-				xmlSer.Serialize(sw, lList);
-				sw.Close();
-			}
-			else
-			{
-
-			}
-
-			sFD.Reset();
-			sFD.Dispose();
-
-		}
-
+		
 		/// <summary>
-		/// フォームを閉じる前の状態で保存する。
+		/// フォームオープン時にチェックボックスの内容を設定する。
 		/// </summary>
-		/// <param name="lList">保存するリスト</param>
-		private void SaveCurrentData(List<LaunchSoft> lList)
-		{
-
-			/* 選択したファイルをデシリアライズしてリストに格納する。 */
-			if (liSoft.Count > 0)
-			{
-				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
-
-				StreamWriter sw = new StreamWriter(gv.GetPreviousFilePass(), false, new UTF8Encoding(false));
-
-				xmlSer.Serialize(sw, lList);
-				sw.Close();
-			}
-
-		}
-
-		/// <summary>
-		/// フォームクローズ時にチェックボックスの設定を保存する。
-		/// </summary>
-		private void SaveConfig()
+		private void SetConfig()
 		{
 			Config config = new Config();
-			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
-			StreamWriter sw = new StreamWriter(gv.GetConfigPass(), false, new UTF8Encoding(false));
-
-			config.Duplicate = checkBox_DuplicateCheck.Checked;
-			config.Delete = checkBox_DeleteConfirm.Checked;
-			config.PrevData = checkBox_LaunchConfirm.Checked;
-
-			xmlSer.Serialize(sw, config);
-			sw.Close();
-
+			checkBox_DuplicateCheck.Checked = config.Duplicate;
+			checkBox_DeleteConfirm.Checked = config.Delete;
+			checkBox_LaunchConfirm.Checked = config.PrevData;
 		}
-
-		/// <summary>
-		/// XMLファイルからリストを開く
-		/// </summary>
-		/// <returns>XMLから開いたリスト</returns>
-		private List<LaunchSoft> DeserializeXML()
-		{
-			List<LaunchSoft> llist = new List<LaunchSoft>();
-			string filePath = "";
-
-			/* ダイアログを表示して開きたいリストを選択する */
-			OpenFileDialog oFD = new OpenFileDialog();
-			oFD.Title = "オープンするファイルを選択してください";
-			oFD.InitialDirectory = gv.MyDirectory;
-			oFD.FileName = "";
-			oFD.Filter = "XMLファイル|*.xml";
-			oFD.FilterIndex = 1;
-			oFD.RestoreDirectory = true;
-			oFD.Multiselect = true;
-			oFD.ShowHelp = true;
-			oFD.ShowReadOnly = true;
-			oFD.ReadOnlyChecked = true;
-			if (oFD.ShowDialog() == DialogResult.OK)
-			{
-				filePath = oFD.FileName;
-
-				/* 選択したファイルをデシリアライズしてリストに格納する。 */
-				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
-				try
-				{
-					StreamReader sr = new StreamReader(filePath, new UTF8Encoding(false));
-					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
-					sr.Close();
-				}
-				catch (NotSupportedException nse)
-				{
-					llist = new List<LaunchSoft>()
-					{
-						new LaunchSoft()
-						{
-							Launch = false,
-							Name = "できない",
-							Path = nse.ToString()
-						}
-					};
-				}
-			}
-			else
-			{
-
-			}
-
-			oFD.Dispose();
-
-			return llist;
-		}
-
-		/// <summary>
-		/// 前回使用していたデータを開く。
-		/// 無ければ
-		/// </summary>
-		/// <returns>前回使用していたデータ</returns>
-		private List<LaunchSoft> OpenPrevData()
-		{
-			DialogResult dr;
-			List<LaunchSoft> llist = new List<LaunchSoft>();
-
-			/*dr = MessageBox.Show("前回使用していたデータを開きますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-			if (dr == DialogResult.No)
-			{
-				return new List<LaunchSoft>();
-			}*/
-
-			/* 選択したファイルをデシリアライズしてリストに格納する。 */
-			XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
-			try
-			{
-				if (File.Exists(gv.GetPreviousFilePass()))
-				{
-					StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
-					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
-					sr.Close();
-				}
-				else
-				{
-					llist = new List<LaunchSoft>();
-				}
-			}
-			catch (NotSupportedException nse)
-			{
-				llist = new List<LaunchSoft>()
-				{
-					new LaunchSoft()
-					{
-						Launch = false,
-						Name = "できない",
-						Path = nse.ToString()
-					}
-				};
-			}
-
-			return llist;
-		}
-
-		// リスト内の重複をチェックする。
-		// リストにソフトを追加するタイミングで使用。
-		private bool DuplicateCheck(List<LaunchSoft> checkList, LaunchSoft checkData)
-		{
-			bool isDuplicate = false;
-
-			foreach (LaunchSoft ls in checkList)
-			{
-				if (ls.Name.Contains(checkData.Name))
-				{
-					isDuplicate = true;
-				}
-			}
-
-			return isDuplicate;
-		}
-
-		private void Main_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			SaveCurrentData(liSoft);
-			SaveConfig();
-			Close();
-		}
+		
 	}
 }

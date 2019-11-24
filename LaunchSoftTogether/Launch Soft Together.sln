@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launch Soft Together", "Launch Soft Together.csproj", "{DE92835E-892B-413B-AA18-673D53C885EC}"
 EndProject
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {ACAADD19-7D90-4559-9C83-28C570F024E3}
+		SolutionGuid = {78CDAC8B-183D-4A45-8584-65552E327FC4}
 	EndGlobalSection
 EndGlobal

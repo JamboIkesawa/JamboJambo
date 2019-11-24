@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace Launch_Soft_Together
@@ -42,9 +43,10 @@ namespace Launch_Soft_Together
 		}
 
 		/// <summary>
-		/// 
+		/// XMLファイルが保存されているフォルダ内のXMLファイルを表示する。
+		/// (configフォルダ内のXMLファイルは表示しない。)
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>XMLファイルのパスが格納された配列</returns>
 		public List<XmlFiles> OpenXmlFile()
 		{
 			string[] xmlfiles = Directory.GetFiles(gv.GetXmlFolderPass(), "*.xml", SearchOption.TopDirectoryOnly);
@@ -59,6 +61,232 @@ namespace Launch_Soft_Together
 			return xmlFile;
 		}
 
+		/// <summary>
+		/// 指定したディレクトリからファイルを選択するダイアログを開く。
+		/// </summary>
+		/// <param name="Title">ダイアログのタイトル</param>
+		/// <param name="InitialDirectory">ダイアログ表示時に示すディレクトリ</param>
+		/// <param name="Filter">開くファイルの形式(拡張子)</param>
+		/// <returns>選択したファイルのパス</returns>
+		public string OpenDialog(string Title, string InitialDirectory, string Filter)
+		{
+			string filePath = "";
+			OpenFileDialog oFD = new OpenFileDialog();
+			oFD.Title = Title;
+			oFD.InitialDirectory = InitialDirectory;
+			oFD.FileName = "";
+			oFD.Filter = Filter;
+			oFD.FilterIndex = 1;
+			oFD.RestoreDirectory = true;
+			oFD.Multiselect = true;
+			oFD.ShowHelp = true;
+			oFD.ShowReadOnly = true;
+			oFD.ReadOnlyChecked = true;
+
+			oFD.ShowDialog();
+			filePath = oFD.FileName;
+
+			oFD.Reset();
+			oFD.Dispose();
+
+			return filePath;
+		}
+
+		/// <summary>
+		/// 指定したディレクトリにファイルを保存するディレクトリを開く。
+		/// </summary>
+		/// <param name="Title">ダイアログのタイトル</param>
+		/// <param name="InitialDirectory">ダイアログ表示時に示すディレクトリ</param>
+		/// <param name="Filter">保存するファイルの形式(拡張子)</param>
+		/// <returns>保存したファイルのパス</returns>
+		public string SaveDialog(string Title, string InitialDirectory, string Filter)
+		{
+			string filePath = "";
+			SaveFileDialog sFD = new SaveFileDialog();
+			sFD.Title = Title;
+			sFD.InitialDirectory = InitialDirectory;
+			sFD.FileName = "";
+			sFD.Filter = Filter;
+			sFD.FilterIndex = 1;
+			sFD.RestoreDirectory = true;
+			sFD.ShowHelp = true;
+
+			sFD.ShowDialog();
+			filePath = sFD.FileName;
+
+			sFD.Reset();
+			sFD.Dispose();
+
+			return filePath;
+		}
+
+		/// <summary>
+		/// リストをXMLファイルに保存する。
+		/// </summary>
+		/// <param name="lList">保存するリスト</param>
+		public void SerializeXML(List<LaunchSoft> lList)
+		{
+			string filePath = "";
+
+			filePath = SaveDialog("セーブします", gv.GetXmlFolderPass(), "XMLファイル|*.xml");
+			if(filePath.Length > 0)
+			{
+				/* 選択したファイルをデシリアライズしてリストに格納する。 */
+				XmlSerializer xmlser = new XmlSerializer(typeof(List<LaunchSoft>));
+
+				StreamWriter sw = new StreamWriter(filePath, false, new UTF8Encoding(false));
+
+				xmlser.Serialize(sw, lList);
+				sw.Close();
+			}
+			else
+			{
+				/* 処理なし */
+			}
+		}
+
+		/// <summary>
+		/// フォームを閉じる前の状態で保存する。
+		/// </summary>
+		/// <param name="lList">保存するリスト</param>
+		public void SaveCurrentData(List<LaunchSoft> lList)
+		{
+
+			/* 選択したファイルをデシリアライズしてリストに格納する。 */
+			if (lList.Count > 0)
+			{
+				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+
+				StreamWriter sw = new StreamWriter(gv.GetPreviousFilePass(), false, new UTF8Encoding(false));
+
+				xmlSer.Serialize(sw, lList);
+				sw.Close();
+			}
+
+		}
+
+		/// <summary>
+		/// フォームクローズ時にチェックボックスの設定を保存する。
+		/// </summary>
+		/// <param name="Dup">重複可否チェック</param>
+		/// <param name="Del">削除確認チェック</param>
+		/// <param name="Pre">前回ファイルチェック</param>
+		public void SaveConfig(bool Dup, bool Del, bool Pre)
+		{
+			Config config = new Config();
+			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
+			StreamWriter sw = new StreamWriter(gv.GetConfigPass(), false, new UTF8Encoding(false));
+
+			config.Duplicate = Dup;
+			config.Delete = Del;
+			config.PrevData = Pre;
+
+			xmlSer.Serialize(sw, config);
+			sw.Close();
+
+		}
+
+		/// <summary>
+		/// XMLファイルからリストを開く
+		/// </summary>
+		/// <returns>XMLから開いたリスト</returns>
+		public List<LaunchSoft> DeserializeXML()
+		{
+			List<LaunchSoft> llist = new List<LaunchSoft>();
+			string filePath = "";
+
+			filePath = OpenDialog("オープンするファイルを選択してください", gv.MyDirectory, "XMLファイル|*.xml");
+			if (filePath.Length > 0)
+			{
+				/* 選択したファイルをデシリアライズしてリストに格納する。 */
+				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+				try
+				{
+					StreamReader sr = new StreamReader(filePath, new UTF8Encoding(false));
+					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+					sr.Close();
+				}
+				catch (NotSupportedException nse)
+				{
+					llist = new List<LaunchSoft>()
+					{
+						new LaunchSoft()
+						{
+							Launch = false,
+							Name = "できない",
+							Path = nse.ToString()
+						}
+					};
+				}
+			}
+			else
+			{
+				/* 処理なし */
+			}
+
+			return llist;
+		}
+
+		/// <summary>
+		/// 前回使用していたデータを開く。
+		/// 無ければ
+		/// </summary>
+		/// <returns>前回使用していたデータ</returns>
+		public List<LaunchSoft> OpenPrevData()
+		{
+			List<LaunchSoft> llist = new List<LaunchSoft>();
+
+			/* 選択したファイルをデシリアライズしてリストに格納する。 */
+			XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+			try
+			{
+				if (File.Exists(gv.GetPreviousFilePass()))
+				{
+					StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
+					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+					sr.Close();
+				}
+				else
+				{
+					llist = new List<LaunchSoft>();
+				}
+			}
+			catch (NotSupportedException nse)
+			{
+				llist = new List<LaunchSoft>()
+				{
+					new LaunchSoft()
+					{
+						Launch = false,
+						Name = "できない",
+						Path = nse.ToString()
+					}
+				};
+			}
+
+			return llist;
+		}
+
+		/// <summary>
+		/// リスト内の重複をチェックする。
+		/// </summary>
+		/// <param name="checkList">チェックするリスト</param>
+		/// <param name="checkData">チェックするデータ</param>
+		/// <returns></returns>
+		public bool DuplicateCheck(List<LaunchSoft> checkList, LaunchSoft checkData)
+		{
+			bool isDuplicate = false;
+
+			foreach (LaunchSoft ls in checkList)
+			{
+				if (ls.Name.Contains(checkData.Name))
+				{
+					isDuplicate = true;
+				}
+			}
+
+			return isDuplicate;
+		}
 
 	}
 
@@ -69,6 +297,7 @@ namespace Launch_Soft_Together
 		private static string prevData = "Previous.xml";
 		private static string configData = "config.xml";
 		private static string myDirectory = Directory.GetCurrentDirectory();
+		private static string userDesktop = "C:\\Users\\" + Environment.UserName + "\\Desktop\\";
 
 		public string Xml
 		{
@@ -106,6 +335,10 @@ namespace Launch_Soft_Together
 		public string GetConfigPass()
 		{
 			return myDirectory + xmlFile + configFile + configData;
+		}
+		public string GetDesktopPass()
+		{
+			return userDesktop;
 		}
 	}
 

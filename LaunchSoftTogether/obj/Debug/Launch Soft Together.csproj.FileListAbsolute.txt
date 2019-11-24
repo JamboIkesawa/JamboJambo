@@ -48,3 +48,5 @@ C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch_So
 C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Properties.Resources.resources
 C:\Users\BP-022\Desktop\資料\git\退避\LaunchSoftTogether\obj\Debug\Launch Soft Together.csproj.GenerateResource.Cache
 C:\Users\BP-022\Desktop\資料\git\repos\JamboJambo\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.FileSelection.resources
+C:\Users\cvbgh\jambojambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.exe
+C:\Users\cvbgh\jambojambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.pdb
