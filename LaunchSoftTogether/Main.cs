@@ -111,20 +111,12 @@ namespace Launch_Soft_Together
 		/* フォームを閉じる */
 		private void button_Close_Click(object sender, EventArgs e)
 		{
-			cc.SaveCurrentData(liSoft);
-			cc.SaveConfig(checkBox_DuplicateCheck.Checked, 
-						  checkBox_DeleteConfirm.Checked, 
-						  checkBox_LaunchConfirm.Checked);
-			Close();
+			CloseForm();
 		}
 
 		private void Main_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			cc.SaveCurrentData(liSoft);
-			cc.SaveConfig(checkBox_DuplicateCheck.Checked,
-						  checkBox_DeleteConfirm.Checked,
-						  checkBox_LaunchConfirm.Checked);
-			Close();
+			CloseForm();
 		}
 
 		/* リストの選択したソフトを削除する */
@@ -280,5 +272,17 @@ namespace Launch_Soft_Together
 			checkBox_LaunchConfirm.Checked = config.PrevData;
 		}
 		
+		/// <summary>
+		/// フォームクローズ時に原状況を保存する。
+		/// </summary>
+		private void CloseForm()
+		{
+			cc.SaveCurrentData(liSoft);
+			cc.SaveConfig(checkBox_DuplicateCheck.Checked,
+						  checkBox_DeleteConfirm.Checked,
+						  checkBox_LaunchConfirm.Checked);
+			Close();
+		}
+
 	}
 }
