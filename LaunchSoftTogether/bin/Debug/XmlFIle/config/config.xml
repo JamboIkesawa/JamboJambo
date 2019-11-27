@@ -2,5 +2,5 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Duplicate>true</Duplicate>
   <Delete>true</Delete>
-  <PrevData>false</PrevData>
+  <PrevData>true</PrevData>
 </Config>

@@ -17,36 +17,32 @@ namespace Launch_Soft_Together
 	public partial class Main : Form
 	{
 		List<LaunchSoft> liSoft = new List<LaunchSoft>();
-		//List<LaunchSoftForDisplay> lifdSoft = new List<LaunchSoftForDisplay>();
 		GlobalVariables gv = new GlobalVariables();
 		CommonClass cc = new CommonClass();
 
 		/* フォームを開いたときにする処理 */
 		public Main()
 		{
-			
+			List<LaunchSoft> prevSoft = new List<LaunchSoft>();
+
 			InitializeComponent();
 			
 			cc.OpenConfig();
 			SetConfig();
+			
 			if (checkBox_LaunchConfirm.Checked == true)
 			{
-				liSoft = cc.OpenPrevData();
+				prevSoft = cc.OpenPrevData();
 			}
 			else
 			{
-				liSoft = new List<LaunchSoft>();
+				prevSoft = new List<LaunchSoft>();
 			}
-			dataGridView_Prev.DataSource = liSoft;
+			dataGridView_Prev.DataSource = prevSoft;
 			dataGridView_Current.DataSource = liSoft;
 			UpdateData();
 			ChangeGridViewStyle(dataGridView_Prev);
 			ChangeGridViewStyle(dataGridView_Current);
-		}
-
-		private void FrmFS_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			//throw new NotImplementedException();
 		}
 
 		/* 起動するファイルを追加する */
@@ -61,7 +57,7 @@ namespace Launch_Soft_Together
 			{
 				doc.Name = Path.GetFileName(filepath);  //ファイル名のみを取得する
 				doc.Path = filepath;                    //ファイルパスを取得する
-				AddData(doc);
+				cc.AddData(liSoft, doc, checkBox_DuplicateCheck.Checked);
 				UpdateData();
 			}
 
@@ -70,42 +66,7 @@ namespace Launch_Soft_Together
 		/* リストのソフトを起動する */
 		private void button_Launch_Click(object sender, EventArgs e)
 		{
-			Process pLaunch = new Process();
-
-			if (liSoft.Count > 0)
-			{
-				foreach (LaunchSoft ls in liSoft)
-				{
-					try
-					{
-						using (Process pro = new Process())
-						{
-							if (ls.Launch == true)
-							{
-								pro.StartInfo.FileName = ls.Path;
-								pro.Start();
-							}
-						}
-					}
-					catch (InvalidOperationException ioe)
-					{
-						MessageBox.Show("エラー\n" + ioe.ToString());
-					}
-					catch (Win32Exception w32e)
-					{
-						MessageBox.Show("エラー\n" + w32e.ToString());
-					}
-					catch (FileNotFoundException fnfe)
-					{
-						MessageBox.Show("エラー\n" + fnfe.ToString());
-						//nantekottai
-					}
-				}
-			}
-			else
-			{
-				MessageBox.Show("追加するソフトがありません。");
-			}
+			cc.LaunchSoftsTogether(liSoft);
 		}
 
 		/* フォームを閉じる */
@@ -201,30 +162,7 @@ namespace Launch_Soft_Together
 			richTextBox_PrevPath.Text = liSoft[e.RowIndex].Path;
 		}
 
-		/* データを追加する(重複があるかチェック) */
-		private void AddData(LaunchSoft doc)
-		{
-			// 重複があり、かつ重複が許されていなければ
-			if (cc.DuplicateCheck(liSoft, doc) && (checkBox_DuplicateCheck.Checked == false))
-			{
-				DialogResult dr = new DialogResult();
-				dr = MessageBox.Show("既に追加されています。\n同じデータを追加してもよろしいですか？", "重複確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-				if(dr == DialogResult.Yes)
-				{
-					liSoft.Add(doc);
-				}
-				return;
-			}
-			else
-			{
-				liSoft.Add(doc);
-			}
-			
-		}
-
 		/* データを更新する */
-		// TODO: 呼ばれるたびにリストの形が崩れるので形を考える。
 		private void UpdateData()
 		{
 			// リストを更新する
@@ -257,8 +195,7 @@ namespace Launch_Soft_Together
 			// ヘッダーの高さを調整する。
 			//changeGrid.Rows[0].Height = 100;
 			changeGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-
+			
 		}
 		
 		/// <summary>
@@ -281,7 +218,7 @@ namespace Launch_Soft_Together
 			cc.SaveConfig(checkBox_DuplicateCheck.Checked,
 						  checkBox_DeleteConfirm.Checked,
 						  checkBox_LaunchConfirm.Checked);
-			Close();
+			this.Close();
 		}
 
 	}

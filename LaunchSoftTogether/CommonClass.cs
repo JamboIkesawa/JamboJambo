@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,13 +16,13 @@ namespace Launch_Soft_Together
 	{
 		List<XmlFiles> xmlFile = new List<XmlFiles>();
 		GlobalVariables gv = new GlobalVariables();
+		Config config = new Config();
 
 		/// <summary>
 		/// コンフィグファイルをオープンし、ファイル内容を取り込む。
 		/// </summary>
 		public void OpenConfig()
 		{
-			Config config = new Config();
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
 			try
 			{
@@ -273,7 +275,7 @@ namespace Launch_Soft_Together
 		/// <param name="checkList">チェックするリスト</param>
 		/// <param name="checkData">チェックするデータ</param>
 		/// <returns></returns>
-		public bool DuplicateCheck(List<LaunchSoft> checkList, LaunchSoft checkData)
+		private bool DuplicateCheck(List<LaunchSoft> checkList, LaunchSoft checkData)
 		{
 			bool isDuplicate = false;
 
@@ -288,6 +290,88 @@ namespace Launch_Soft_Together
 			return isDuplicate;
 		}
 
+		/// <summary>
+		/// リストにソフトの情報(名前やパス)を追加する。
+		/// </summary>
+		/// <param name="lList">ソフトの情報を追加するリスト</param>
+		/// <param name="doc">追加するソフトの情報</param>
+		/// <param name="DupChk">重複のチェックボックスの状態</param>
+		public void AddData(List<LaunchSoft> lList, LaunchSoft doc, bool DupChk)
+		{
+			// 重複があり、かつ重複が許されていなければ
+			if (DuplicateCheck(lList, doc) && (DupChk == false))
+			{
+				DialogResult dr = new DialogResult();
+				dr = MessageBox.Show("既に追加されています。\n同じデータを追加してもよろしいですか？", "重複確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+				if (dr == DialogResult.Yes)
+				{
+					lList.Add(doc);
+				}
+				return;
+			}
+			else
+			{
+				lList.Add(doc);
+			}
+
+			return;
+		}
+
+		/// <summary>
+		/// コレクションのソフトを開く。
+		/// </summary>
+		/// <param name="lList">開くソフトを入れているコレクション</param>
+		public void LaunchSoftsTogether(List<LaunchSoft> lList)
+		{
+			Process pLaunch = new Process();
+
+			if (lList.Count > 0)
+			{
+				foreach (LaunchSoft ls in lList)
+				{
+					try
+					{
+						using (Process pro = new Process())
+						{
+							if (ls.Launch == true)
+							{
+								pro.StartInfo.FileName = ls.Path;
+								pro.Start();
+							}
+						}
+					}
+					catch (InvalidOperationException ioe)
+					{
+						MessageBox.Show("エラー\n" + ioe.ToString());
+					}
+					catch (Win32Exception w32e)
+					{
+						MessageBox.Show("エラー\n" + w32e.ToString());
+					}
+					catch (FileNotFoundException fnfe)
+					{
+						MessageBox.Show("エラー\n" + fnfe.ToString());
+					}
+					finally
+					{
+						MessageBox.Show("");
+					}
+				}
+			}
+			else
+			{
+				MessageBox.Show("追加するソフトがありません。");
+			}
+		}
+
+
+
+		/* TODO
+		 　・フォルダを選択したらフォルダ内のソフトをまとめて立ち上げるように
+		 　・ドラッグアンドドロップでソフトを追加できるように
+		 */
+
 	}
 
 	public class GlobalVariables
@@ -298,7 +382,7 @@ namespace Launch_Soft_Together
 		private static string configData = "config.xml";
 		private static string myDirectory = Directory.GetCurrentDirectory();
 		private static string userDesktop = "C:\\Users\\" + Environment.UserName + "\\Desktop\\";
-
+		
 		public string Xml
 		{
 			get{ return xmlFile; }
