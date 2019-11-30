@@ -1,4 +1,6 @@
-﻿namespace Launch_Soft_Together
+﻿using System;
+
+namespace Launch_Soft_Together
 {
 	partial class Main
 	{
@@ -17,6 +19,7 @@
 			{
 				components.Dispose();
 			}
+
 			base.Dispose(disposing);
 		}
 
@@ -28,7 +31,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.button_ChooseList = new System.Windows.Forms.Button();
 			this.dataGridView_Current = new System.Windows.Forms.DataGridView();
 			this.button_Add = new System.Windows.Forms.Button();
@@ -76,8 +79,6 @@
 			this.dataGridView_Current.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridView_Current.Size = new System.Drawing.Size(198, 158);
 			this.dataGridView_Current.TabIndex = 1;
-			this.dataGridView_Current.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Current_CellContentClick);
-			this.dataGridView_Current.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Current_CellContentClick);
 			// 
 			// button_Add
 			// 
@@ -213,11 +214,11 @@
 			// 
 			// dataGridView_Prev
 			// 
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.dataGridView_Prev.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+			this.dataGridView_Prev.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
 			this.dataGridView_Prev.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
 			this.dataGridView_Prev.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView_Prev.Location = new System.Drawing.Point(9, 29);
@@ -227,8 +228,6 @@
 			this.dataGridView_Prev.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridView_Prev.Size = new System.Drawing.Size(198, 158);
 			this.dataGridView_Prev.TabIndex = 2;
-			this.dataGridView_Prev.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Prev_CellContentClick);
-			this.dataGridView_Prev.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Prev_CellContentClick);
 			// 
 			// label_Previous
 			// 

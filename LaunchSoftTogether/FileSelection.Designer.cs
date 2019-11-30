@@ -42,6 +42,7 @@
 			this.dataGridView_FileList.RowTemplate.Height = 21;
 			this.dataGridView_FileList.Size = new System.Drawing.Size(166, 199);
 			this.dataGridView_FileList.TabIndex = 0;
+			this.dataGridView_FileList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_FileList_CellContentClick);
 			this.dataGridView_FileList.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_FileList_CellContentDoubleClick);
 			// 
 			// button_ListOpen

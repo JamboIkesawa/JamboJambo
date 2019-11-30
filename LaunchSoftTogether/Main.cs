@@ -48,16 +48,19 @@ namespace Launch_Soft_Together
 		/* 起動するファイルを追加する */
 		private void button_Add_Click(object sender, EventArgs e)
 		{
-			LaunchSoft doc = new LaunchSoft();
 			string filepath = "";
-			doc.Launch = true;
 
 			filepath = cc.OpenDialog("追加するファイルを選択してください", gv.GetDesktopPass(), "すべてのファイル|*.*");
 			if (filepath.Length > 0)
 			{
-				doc.Name = Path.GetFileName(filepath);  //ファイル名のみを取得する
-				doc.Path = filepath;                    //ファイルパスを取得する
-				cc.AddData(liSoft, doc, checkBox_DuplicateCheck.Checked);
+				cc.AddData(liSoft, 
+						   new LaunchSoft()
+						   {
+							   Launch = true,
+							   Name = Path.GetFileName(filepath),
+							   Path = filepath
+						   }, 
+						   checkBox_DuplicateCheck.Checked);
 				UpdateData();
 			}
 
@@ -83,24 +86,8 @@ namespace Launch_Soft_Together
 		/* リストの選択したソフトを削除する */
 		private void button_Delete_Click(object sender, EventArgs e)
 		{
-			if (checkBox_DeleteConfirm.Checked == true)
-			{
-				foreach (DataGridViewRow gdvRow in dataGridView_Current.SelectedRows)
-				{
-					liSoft.RemoveRange(gdvRow.Index, 1);
-				}
-				UpdateData();
-				return;
-			}
-			DialogResult result = MessageBox.Show(
-										"削除しますか？",
-										"削除",
-										MessageBoxButtons.YesNoCancel,
-										MessageBoxIcon.Exclamation,
-										MessageBoxDefaultButton.Button1);
-
-			/* 削除するなら */
-			if (result == DialogResult.Yes)
+			bool isDelete = cc.DeleteConfirm(checkBox_DeleteConfirm.Checked);
+			if (isDelete)
 			{
 				foreach (DataGridViewRow gdvRow in dataGridView_Current.SelectedRows)
 				{
@@ -108,15 +95,7 @@ namespace Launch_Soft_Together
 				}
 				UpdateData();
 			}
-			/* それ以外は何もしない */
-			else if (result == DialogResult.No)
-			{
-
-			}
-			else
-			{
-
-			}
+			
 		}
 
 		/* XMLファイルとしてリストを保存する */
@@ -130,36 +109,6 @@ namespace Launch_Soft_Together
 		{
 			liSoft = cc.DeserializeXML();
 			UpdateData();
-		}
-
-		/* DataGridViewで削除ボタンを押された行のデータを削除する。 */
-		private void dataGridView_Current_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			DataGridView dgv = (DataGridView)sender;
-			// クリックしたセルの列名がボタンならば
-			// (他のセルをクリックしても削除されないように)
-			if (dgv.Columns[e.ColumnIndex].Name == "ボタン")
-			{
-				liSoft.RemoveRange(e.RowIndex, 1);
-				UpdateData();
-			}
-
-			richTextBox_CurrentPath.Text = liSoft[e.RowIndex].Path;
-		}
-
-		/* DataGridViewで削除ボタンを押された行のデータを削除する。 */
-		private void dataGridView_Prev_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			DataGridView dgv = (DataGridView)sender;
-			// クリックしたセルの列名がボタンならば
-			// (他のセルをクリックしても削除されないように)
-			if (dgv.Columns[e.ColumnIndex].Name == "ボタン")
-			{
-				liSoft.RemoveRange(e.RowIndex, 1);
-				UpdateData();
-			}
-
-			richTextBox_PrevPath.Text = liSoft[e.RowIndex].Path;
 		}
 
 		/* データを更新する */

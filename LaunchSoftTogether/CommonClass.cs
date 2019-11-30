@@ -14,6 +14,7 @@ namespace Launch_Soft_Together
 
 	public class CommonClass
 	{
+
 		List<XmlFiles> xmlFile = new List<XmlFiles>();
 		GlobalVariables gv = new GlobalVariables();
 		Config config = new Config();
@@ -229,6 +230,42 @@ namespace Launch_Soft_Together
 			return llist;
 		}
 
+
+		public List<LaunchSoft> DeserializeXML(string xmlFilePath)
+		{
+			List<LaunchSoft> llist = new List<LaunchSoft>();
+			
+			if (xmlFilePath.Length > 0)
+			{
+				/* 選択したファイルをデシリアライズしてリストに格納する。 */
+				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+				try
+				{
+					StreamReader sr = new StreamReader(xmlFilePath, new UTF8Encoding(false));
+					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+					sr.Close();
+				}
+				catch (NotSupportedException nse)
+				{
+					llist = new List<LaunchSoft>()
+					{
+						new LaunchSoft()
+						{
+							Launch = false,
+							Name = "できない",
+							Path = nse.ToString()
+						}
+					};
+				}
+			}
+			else
+			{
+				/* 処理なし */
+			}
+
+			return llist;
+		}
+
 		/// <summary>
 		/// 前回使用していたデータを開く。
 		/// 無ければ
@@ -274,7 +311,7 @@ namespace Launch_Soft_Together
 		/// </summary>
 		/// <param name="checkList">チェックするリスト</param>
 		/// <param name="checkData">チェックするデータ</param>
-		/// <returns></returns>
+		/// <returns>重複の有無</returns>
 		private bool DuplicateCheck(List<LaunchSoft> checkList, LaunchSoft checkData)
 		{
 			bool isDuplicate = false;
@@ -365,7 +402,46 @@ namespace Launch_Soft_Together
 			}
 		}
 
+		/// <summary>
+		/// 削除するかの判定を行う。
+		/// </summary>
+		/// <param name="DelChk">削除前確認のチェックボックスの状態</param>
+		/// <returns>削除の否応</returns>
+		public bool DeleteConfirm(bool DelChk)
+		{
+			bool isDelete = false;
 
+			if (DelChk)
+			{
+				isDelete = true;
+			}
+			else
+			{
+				DialogResult result = MessageBox.Show(
+											"削除しますか？",
+											"削除",
+											MessageBoxButtons.YesNoCancel,
+											MessageBoxIcon.Exclamation,
+											MessageBoxDefaultButton.Button1);
+
+				/* 削除するなら */
+				if (result == DialogResult.Yes)
+				{
+					isDelete = true;
+				}
+				/* それ以外は何もしない */
+				else if (result == DialogResult.No)
+				{
+					isDelete = false;
+				}
+				else
+				{
+					isDelete = false;
+				}
+			}
+
+			return isDelete;
+		}
 
 		/* TODO
 		 　・フォルダを選択したらフォルダ内のソフトをまとめて立ち上げるように
@@ -373,7 +449,7 @@ namespace Launch_Soft_Together
 		 */
 
 	}
-
+	
 	public class GlobalVariables
 	{
 		private static string xmlFile = "\\XmlFile\\";
