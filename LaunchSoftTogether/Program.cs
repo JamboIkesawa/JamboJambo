@@ -16,8 +16,15 @@ namespace Launch_Soft_Together
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FileSelection());
-			Application.Run(new Main());
+			try
+			{
+				Application.Run(new FileSelection());
+				Application.Run(new Main());
+			}
+			catch(InvalidOperationException ioe)
+			{
+				MessageBox.Show(ioe.Message);
+			}
 		}
 	}
 }

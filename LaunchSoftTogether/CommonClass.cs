@@ -178,14 +178,21 @@ namespace Launch_Soft_Together
 		{
 			Config config = new Config();
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
-			StreamWriter sw = new StreamWriter(gv.GetConfigPass(), false, new UTF8Encoding(false));
+			try
+			{
+				StreamWriter sw = new StreamWriter(gv.GetConfigPass(), false, new UTF8Encoding(false));
+				config.Duplicate = Dup;
+				config.Delete = Del;
+				config.PrevData = Pre;
 
-			config.Duplicate = Dup;
-			config.Delete = Del;
-			config.PrevData = Pre;
+				xmlSer.Serialize(sw, config);
+				sw.Close();
+			}
+			catch (StackOverflowException soe)
+			{
+				MessageBox.Show(soe.ToString());
+			}
 
-			xmlSer.Serialize(sw, config);
-			sw.Close();
 
 		}
 
