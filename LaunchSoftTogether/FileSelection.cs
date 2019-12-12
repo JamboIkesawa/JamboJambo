@@ -30,11 +30,19 @@ namespace Launch_Soft_Together
 
 		private void button_ListOpen_Click(object sender, EventArgs e)
 		{
+			foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
+			{
+				selectedXmlFile = xmlFile[dgvRow.Index];
+			}
 			liSoft = cc.DeserializeXML(selectedXmlFile.Path);
 		}
 
 		private void dataGridView_FileList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
+			foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
+			{
+				selectedXmlFile = xmlFile[dgvRow.Index];
+			}
 			liSoft = cc.DeserializeXML(selectedXmlFile.Path);
 		}
 

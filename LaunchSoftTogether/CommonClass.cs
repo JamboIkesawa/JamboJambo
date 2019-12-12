@@ -14,10 +14,9 @@ namespace Launch_Soft_Together
 
 	public class CommonClass
 	{
-
-		List<XmlFiles> xmlFile = new List<XmlFiles>();
-		GlobalVariables gv = new GlobalVariables();
-		Config config = new Config();
+		public static List<XmlFiles> xmlFile = new List<XmlFiles>();
+		public static GlobalVariables gv = new GlobalVariables();
+		public static Config config = new Config();
 
 		/// <summary>
 		/// コンフィグファイルをオープンし、ファイル内容を取り込む。
