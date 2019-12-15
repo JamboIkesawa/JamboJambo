@@ -24,7 +24,7 @@ namespace Launch_Soft_Together
 		public Main()
 		{
 			List<LaunchSoft> prevSoft = new List<LaunchSoft>();
-
+			
 			InitializeComponent();
 			
 			cc.OpenConfig();
