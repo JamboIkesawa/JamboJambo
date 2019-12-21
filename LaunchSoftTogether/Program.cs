@@ -13,6 +13,11 @@ namespace Launch_Soft_Together
 {
 	static class Program
 	{
+		public static List<XmlFiles> xmlFiles = new List<XmlFiles>();
+		public static XmlFiles xmlFile = new XmlFiles();
+		public static List<LaunchSoft> launchSofts = new List<LaunchSoft>();
+		public static GlobalVariables gv = new GlobalVariables();
+		public static Config config = new Config();
 		/// <summary>
 		/// アプリケーションのメイン エントリ ポイントです。
 		/// </summary>
@@ -33,13 +38,8 @@ namespace Launch_Soft_Together
 		}
 	}
 
-	public class CommonClass
+	public class CommonMethod
 	{
-		public static List<XmlFiles> xmlFiles = new List<XmlFiles>();
-		public static XmlFiles xmlFile = new XmlFiles();
-		public static List<LaunchSoft> launchSofts = new List<LaunchSoft>();
-		public static GlobalVariables gv = new GlobalVariables();
-		public static Config config = new Config();
 
 		/// <summary>
 		/// コンフィグファイルをオープンし、ファイル内容を取り込む。
@@ -49,20 +49,22 @@ namespace Launch_Soft_Together
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
 			try
 			{
-				if (File.Exists(gv.GetConfigPass()))
+				if (File.Exists(Program.gv.GetConfigPass()))
 				{
-					StreamReader sr = new StreamReader(gv.GetConfigPass(), new UTF8Encoding(false));
-					config = (Config)xmlSer.Deserialize(sr);
+					// ファイルが存在した場合、
+					StreamReader sr = new StreamReader(Program.gv.GetConfigPass(), new UTF8Encoding(false));
+					Program.config = (Config)xmlSer.Deserialize(sr);
 					sr.Close();
 				}
 				else
 				{
-					config = new Config();
+					// ファイルパスのファイルが無ければConfigのインスタンスを生成
+					Program.config = new Config();
 				}
 			}
 			catch (NotSupportedException nse)
 			{
-				config = new Config();
+				Program.config = new Config();
 			}
 
 		}
@@ -74,16 +76,16 @@ namespace Launch_Soft_Together
 		/// <returns>XMLファイルのパスが格納された配列</returns>
 		public List<XmlFiles> OpenXmlFile()
 		{
-			string[] xmlfiles = Directory.GetFiles(gv.GetXmlFolderPass(), "*.xml", SearchOption.TopDirectoryOnly);
+			string[] xmlfiles = Directory.GetFiles(Program.gv.GetXmlFolderPass(), "*.xml", SearchOption.TopDirectoryOnly);
 			foreach (String xf in xmlfiles)
 			{
-				xmlFiles.Add(new XmlFiles
+				Program.xmlFiles.Add(new XmlFiles
 				{
 					Name = Path.GetFileName(xf),
 					Path = xf
 				});
 			}
-			return xmlFiles;
+			return Program.xmlFiles;
 		}
 
 		/// <summary>
@@ -153,7 +155,7 @@ namespace Launch_Soft_Together
 		{
 			string filePath = "";
 
-			filePath = SaveDialog("セーブします", gv.GetXmlFolderPass(), "XMLファイル|*.xml");
+			filePath = SaveDialog("セーブします", Program.gv.GetXmlFolderPass(), "XMLファイル|*.xml");
 			if (filePath.Length > 0)
 			{
 				/* 選択したファイルをデシリアライズしてリストに格納する。 */
@@ -182,7 +184,7 @@ namespace Launch_Soft_Together
 			{
 				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 
-				StreamWriter sw = new StreamWriter(gv.GetPreviousFilePass(), false, new UTF8Encoding(false));
+				StreamWriter sw = new StreamWriter(Program.gv.GetPreviousFilePass(), false, new UTF8Encoding(false));
 
 				xmlSer.Serialize(sw, lList);
 				sw.Close();
@@ -202,7 +204,7 @@ namespace Launch_Soft_Together
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
 			try
 			{
-				StreamWriter sw = new StreamWriter(gv.GetConfigPass(), false, new UTF8Encoding(false));
+				StreamWriter sw = new StreamWriter(Program.gv.GetConfigPass(), false, new UTF8Encoding(false));
 				config.Duplicate = Dup;
 				config.Delete = Del;
 				config.PrevData = Pre;
@@ -227,7 +229,7 @@ namespace Launch_Soft_Together
 			List<LaunchSoft> llist = new List<LaunchSoft>();
 			string filePath = "";
 
-			filePath = OpenDialog("オープンするファイルを選択してください", gv.MyDirectory, "XMLファイル|*.xml");
+			filePath = OpenDialog("オープンするファイルを選択してください", Program.gv.MyDirectory, "XMLファイル|*.xml");
 			if (filePath.Length > 0)
 			{
 				/* 選択したファイルをデシリアライズしてリストに格納する。 */
@@ -264,13 +266,13 @@ namespace Launch_Soft_Together
 		{
 			List<LaunchSoft> llist = new List<LaunchSoft>();
 
-			if (xmlFile.Path.Length > 0)
+			if (Program.xmlFile.Path.Length > 0)
 			{
 				/* 選択したファイルをデシリアライズしてリストに格納する。 */
 				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 				try
 				{
-					StreamReader sr = new StreamReader(xmlFile.Path, new UTF8Encoding(false));
+					StreamReader sr = new StreamReader(Program.xmlFile.Path, new UTF8Encoding(false));
 					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
 					sr.Close();
 				}
@@ -308,9 +310,9 @@ namespace Launch_Soft_Together
 			XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 			try
 			{
-				if (File.Exists(gv.GetPreviousFilePass()))
+				if (File.Exists(Program.gv.GetPreviousFilePass()))
 				{
-					StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
+					StreamReader sr = new StreamReader(Program.gv.GetPreviousFilePass(), new UTF8Encoding(false));
 					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
 					sr.Close();
 				}

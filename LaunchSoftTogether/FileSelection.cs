@@ -5,19 +5,15 @@ namespace Launch_Soft_Together
 {
 	public partial class FileSelection : Form
 	{
-		CommonClass cc = new CommonClass();
-		//Config config = new Config();
-		//List<LaunchSoft> liSoft = new List<LaunchSoft>();
-		//List<XmlFiles> xmlFile = new List<XmlFiles>();
-		//XmlFiles CommonClass.xmlFile = new XmlFiles();
+		CommonMethod cm = new CommonMethod();
 
 		public FileSelection()
 		{
 			InitializeComponent();
-			cc.OpenConfig();
-			CommonClass.xmlFiles = cc.OpenXmlFile();
-			dataGridView_FileList.DataSource = CommonClass.xmlFiles;
-			checkBox_LaunchConfirm.Checked = CommonClass.config.PrevData;
+			cm.OpenConfig();
+			Program.xmlFiles = cm.OpenXmlFile();
+			dataGridView_FileList.DataSource = Program.xmlFiles;
+			checkBox_LaunchConfirm.Checked = Program.config.PrevData;
 			ChangeGridViewStyle(dataGridView_FileList);
 		}
 
@@ -25,9 +21,9 @@ namespace Launch_Soft_Together
 		{
 			foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
 			{
-				CommonClass.xmlFile = CommonClass.xmlFiles[dgvRow.Index];
+				Program.xmlFile = Program.xmlFiles[dgvRow.Index];
 			}
-			CommonClass.launchSofts = cc.DeserializeXML(CommonClass.xmlFile.Path);
+			Program.launchSofts = cm.DeserializeXML(Program.xmlFile.Path);
 		}
 
 		private void dataGridView_FileList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -35,7 +31,7 @@ namespace Launch_Soft_Together
 			if (dataGridView_FileList.SelectedRows.Count < 1)
 			{
 				string strList = "";
-				foreach(XmlFiles xf in CommonClass.xmlFiles)
+				foreach(XmlFiles xf in Program.xmlFiles)
 				{
 					strList = strList + "\n" + xf.Name + " : " + xf.Path;
 				}
@@ -44,22 +40,22 @@ namespace Launch_Soft_Together
 			}
 			foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
 			{
-				CommonClass.xmlFile = CommonClass.xmlFiles[dgvRow.Index];
+				Program.xmlFile = Program.xmlFiles[dgvRow.Index];
 			}
-			CommonClass.launchSofts = cc.DeserializeXML(CommonClass.xmlFile.Path);
+			Program.launchSofts = cm.DeserializeXML(Program.xmlFile.Path);
 		}
 
 		private void dataGridView_FileList_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			foreach(DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
 			{
-				CommonClass.xmlFile = CommonClass.xmlFiles[dgvRow.Index];
+				Program.xmlFile = Program.xmlFiles[dgvRow.Index];
 			}
 		}
 
 		private void FileSelection_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			CommonClass.config.PrevData = checkBox_LaunchConfirm.Checked;
+			Program.config.PrevData = checkBox_LaunchConfirm.Checked;
 		}
 
 		private void ChangeGridViewStyle(DataGridView changeGrid)

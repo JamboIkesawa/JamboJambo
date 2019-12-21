@@ -18,7 +18,7 @@ namespace Launch_Soft_Together
 	{
 		List<LaunchSoft> liSoft = new List<LaunchSoft>();
 		GlobalVariables gv = new GlobalVariables();
-		CommonClass cc = new CommonClass();
+		CommonMethod cc = new CommonMethod();
 
 		/* フォームを開いたときにする処理 */
 		public Main()
