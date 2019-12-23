@@ -74,7 +74,18 @@ namespace Launch_Soft_Together
 		/// (configフォルダ内のXMLファイルは表示しない。)
 		/// </summary>
 		/// <returns>XMLファイルのパスが格納された配列</returns>
-		public List<XmlFiles> OpenXmlFile()
+		public void OpenXmlFile()
+		{
+			string[] xmlfiles = Directory.GetFiles(Program.gv.GetXmlFolderPass(), "*.xml", SearchOption.TopDirectoryOnly);
+			foreach (String xf in xmlfiles)
+			{
+				XmlFiles xmlF = new XmlFiles();
+				xmlF.Name = Path.GetFileName(xf);
+				xmlF.Path = xf;
+				Program.xmlFiles.Add(xmlF);
+			}
+		}
+		/*public List<XmlFiles> OpenXmlFile()
 		{
 			string[] xmlfiles = Directory.GetFiles(Program.gv.GetXmlFolderPass(), "*.xml", SearchOption.TopDirectoryOnly);
 			foreach (String xf in xmlfiles)
@@ -86,7 +97,7 @@ namespace Launch_Soft_Together
 				});
 			}
 			return Program.xmlFiles;
-		}
+		}*/
 
 		/// <summary>
 		/// 指定したディレクトリからファイルを選択するダイアログを開く。
@@ -535,8 +546,8 @@ namespace Launch_Soft_Together
 
 	public class XmlFiles
 	{
-		private string FileName;
-		private string FilePath;
+		private static string FileName;
+		private static string FilePath;
 
 		public string Name
 		{

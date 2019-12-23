@@ -11,10 +11,12 @@ namespace Launch_Soft_Together
 		{
 			InitializeComponent();
 			cm.OpenConfig();
-			Program.xmlFiles = cm.OpenXmlFile();
+			//Program.xmlFiles = cm.OpenXmlFile();
+			cm.OpenXmlFile();
 			dataGridView_FileList.DataSource = Program.xmlFiles;
 			checkBox_LaunchConfirm.Checked = Program.config.PrevData;
 			ChangeGridViewStyle(dataGridView_FileList);
+
 		}
 
 		private void button_ListOpen_Click(object sender, EventArgs e)
