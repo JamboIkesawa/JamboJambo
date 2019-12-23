@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLaunchSoft xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>chrome.exe</FileName>
+    <FilePath>C:\Program Files (x86)\chrome.exe</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>slack.exe</FileName>
+    <FilePath>C:\Users\slack.exe</FilePath>
+  </LaunchSoft>
+  <LaunchSoft>
+    <isLaunch>true</isLaunch>
+    <FileName>Code.exe</FileName>
+    <FilePath>C:\Users\Microsoft VS Code\Code.exe</FilePath>
+  </LaunchSoft>
+</ArrayOfLaunchSoft>

@@ -1,0 +1,81 @@
+このソフトで使う関数について
+
+＋ユーザーフォーム
+	＊メイン
+		―画面上のオブジェクト
+			・
+			・
+			・
+			・
+			・
+			・
+		―ユーザーフォーム関数
+		　()はすぐには実装しない
+			・追加ボタン
+				ダイアログを開いて起動するファイルを追加する。
+			(・)フォルダ追加ボタン
+				ダイアログで指定したフォルダ内のソフトをリストに追加する。
+			(・)リスト追加ボタン
+				データグリッドビューのリストを起動リストに追加する
+			・起動ボタン
+				データグリッドビューに表示されたソフトを起動する。
+			・削除ボタン
+				データグリッドビューで選択したソフトをリストから削除する。
+			・閉じるボタン
+				ユーザーフォームを閉じる
+			(・)リスト選択ボタン
+				保存したリストから表示したいリストを追加する。
+			・データグリッドビュー選択
+				データグリッドビューでセルを選択したときに、
+				選択した情報を取得する。
+	＊リスト追加画面
+		―画面上のオブジェクト
+			・
+			・
+			・
+			・
+			・
+			・
+		―ユーザーフォーム関数
+			・
+			・
+			・
+			・
+			・
+			・
+
+
+
+＋リスト周りの関数
+    ＊リストアップデート
+        リストの内容を更新する
+    ＊リストクリア
+        リストの内容を消去する
+
+＋ファイル周りの関数
+    ＊デフォルトリスト
+        ソフト実行時にデフォルトに設定したリストを設定する
+    ＊
+
+
+今ある関数
+//Main
+public Main()
+
+//Button Control
+private void button_Add_Click()
+private void button_Edit_Click()
+private void button_Launch_Click()
+private void button_Close_Click()
+private void button_Delete_Click()
+private void button_Save_Click()
+private void button_ChooseList_Click()
+
+//Data Control
+private void AddData(LaunchSoft doc)
+private void LoadData()
+private void UpdateData()
+
+//Data Write/Read Control
+private void SerializeXML(List<LaunchSoft> lList)
+private List<LaunchSoft> DeserializeXML()
