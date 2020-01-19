@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Launch_Soft_Together
@@ -6,56 +7,72 @@ namespace Launch_Soft_Together
 	public partial class FileSelection : Form
 	{
 		CommonMethod cm = new CommonMethod();
+		List<XmlFiles> xmlFiles = new List<XmlFiles>();
+		OneTimeSave ots = new OneTimeSave();
+		GlobalVariables gv = new GlobalVariables();
+		Config config = new Config();
 
 		public FileSelection()
 		{
 			InitializeComponent();
-			cm.OpenConfig();
-			Program.xmlFiles = cm.OpenXmlFile();
-			dataGridView_FileList.DataSource = Program.xmlFiles;
-			checkBox_LaunchConfirm.Checked = Program.config.PrevData;
+			config = cm.OpenConfig();	// Configファイルを開く
+			xmlFiles = cm.OpenXmlFile();	// Xmlフォルダ内のファイルをリストに格納
+			dataGridView_FileList.DataSource = xmlFiles;
+			checkBox_LaunchConfirm.Checked = config.PrevData;
+			MessageBox.Show(dataGridView_FileList.Rows.Count.ToString());
 			ChangeGridViewStyle(dataGridView_FileList);
+			MessageBox.Show(dataGridView_FileList.Rows.Count.ToString());
 		}
 
 		private void button_ListOpen_Click(object sender, EventArgs e)
 		{
-			foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
-			{
-				Program.xmlFile = Program.xmlFiles[dgvRow.Index];
-			}
-			Program.launchSofts = cm.DeserializeXML(Program.xmlFile.Path);
+			DataGridViewRow dgvRow = dataGridView_FileList.SelectedRows[0];
+			MessageBox.Show(dgvRow.Cells[0].Value.ToString());
+			MessageBox.Show(dgvRow.Cells[1].Value.ToString());
+			//foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
+			//{
+			//	ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
+			//}
+			// launchSofts = cm.DeserializeXML(xmlFile.Path);
 		}
 
 		private void dataGridView_FileList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (dataGridView_FileList.SelectedRows.Count < 1)
-			{
-				string strList = "";
-				foreach(XmlFiles xf in Program.xmlFiles)
-				{
-					strList = strList + "\n" + xf.Name + " : " + xf.Path;
-				}
-				MessageBox.Show("選択されたリストがありません。\nXmlファイルリスト\n" + strList);
-				return;
-			}
+			//if (dataGridView_FileList.SelectedRows.Count < 1)
+			//{
+			//	string strList = "";
+			//	foreach (XmlFiles xf in xmlFiles)
+			//	{
+			//		strList = strList + "\n" + xf.Name + " : " + xf.Path;
+			//	}
+			//	MessageBox.Show("選択されたリストがありません。\nXmlファイルリスト\n" + strList);
+			//	return;
+			//}
+			//else
+			//{
+			//	foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
+			//	{
+			//		xmlFile = xmlFiles[dgvRow.Index];
+			//	}
+			//	// launchSofts = cm.DeserializeXML(xmlFile.Path);
+			//}
 			foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
 			{
-				Program.xmlFile = Program.xmlFiles[dgvRow.Index];
+				ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
 			}
-			Program.launchSofts = cm.DeserializeXML(Program.xmlFile.Path);
 		}
 
 		private void dataGridView_FileList_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			foreach(DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
-			{
-				Program.xmlFile = Program.xmlFiles[dgvRow.Index];
-			}
+			//foreach(DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
+			//{
+			//	xmlFile = xmlFiles[dgvRow.Index];
+			//}
 		}
 
 		private void FileSelection_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			Program.config.PrevData = checkBox_LaunchConfirm.Checked;
+			config.PrevData = checkBox_LaunchConfirm.Checked;
 		}
 
 		private void ChangeGridViewStyle(DataGridView changeGrid)

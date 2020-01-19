@@ -13,11 +13,6 @@ namespace Launch_Soft_Together
 {
 	static class Program
 	{
-		public static List<XmlFiles> xmlFiles = new List<XmlFiles>();
-		public static XmlFiles xmlFile = new XmlFiles();
-		public static List<LaunchSoft> launchSofts = new List<LaunchSoft>();
-		public static GlobalVariables gv = new GlobalVariables();
-		public static Config config = new Config();
 		/// <summary>
 		/// アプリケーションのメイン エントリ ポイントです。
 		/// </summary>
@@ -40,53 +35,10 @@ namespace Launch_Soft_Together
 
 	public class CommonMethod
 	{
-
-		/// <summary>
-		/// コンフィグファイルをオープンし、ファイル内容を取り込む。
-		/// </summary>
-		public void OpenConfig()
-		{
-			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
-			try
-			{
-				if (File.Exists(Program.gv.GetConfigPass()))
-				{
-					// ファイルが存在した場合、
-					StreamReader sr = new StreamReader(Program.gv.GetConfigPass(), new UTF8Encoding(false));
-					Program.config = (Config)xmlSer.Deserialize(sr);
-					sr.Close();
-				}
-				else
-				{
-					// ファイルパスのファイルが無ければConfigのインスタンスを生成
-					Program.config = new Config();
-				}
-			}
-			catch (NotSupportedException nse)
-			{
-				Program.config = new Config();
-			}
-
-		}
-
-		/// <summary>
-		/// XMLファイルが保存されているフォルダ内のXMLファイルを表示する。
-		/// (configフォルダ内のXMLファイルは表示しない。)
-		/// </summary>
-		/// <returns>XMLファイルのパスが格納された配列</returns>
-		public List<XmlFiles> OpenXmlFile()
-		{
-			string[] xmlfiles = Directory.GetFiles(Program.gv.GetXmlFolderPass(), "*.xml", SearchOption.TopDirectoryOnly);
-			foreach (String xf in xmlfiles)
-			{
-				Program.xmlFiles.Add(new XmlFiles
-				{
-					Name = Path.GetFileName(xf),
-					Path = xf
-				});
-			}
-			return Program.xmlFiles;
-		}
+		const string _Kakuchoshi_XMLFile = "XMLファイル|*.xml";
+		Config config = new Config();
+		GlobalVariables gv = new GlobalVariables();
+		List<XmlFiles> xmlFiles = new List<XmlFiles>();
 
 		/// <summary>
 		/// 指定したディレクトリからファイルを選択するダイアログを開く。
@@ -148,6 +100,53 @@ namespace Launch_Soft_Together
 		}
 
 		/// <summary>
+		/// コンフィグファイルをオープンし、ファイル内容を取り込む。
+		/// </summary>
+		public Config OpenConfig()
+		{
+			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
+			try
+			{
+				if (File.Exists(gv.GetConfigPass()))
+				{
+					// ファイルが存在した場合、
+					StreamReader sr = new StreamReader(gv.GetConfigPass(), new UTF8Encoding(false));
+					config = (Config)xmlSer.Deserialize(sr);
+					sr.Close();
+				}
+				else
+				{
+					// ファイルパスのファイルが無ければConfigのインスタンスを生成
+					config = new Config();
+				}
+			}
+			catch (NotSupportedException nse)
+			{
+				config = new Config();
+			}
+			return config;
+		}
+
+		/// <summary>
+		/// XMLファイルが保存されているフォルダ内のXMLファイルを表示する。
+		/// (configフォルダ内のXMLファイルは表示しない。)
+		/// </summary>
+		/// <returns>XMLファイルのパスが格納された配列</returns>
+		public List<XmlFiles> OpenXmlFile()
+		{
+			string[] xmlfiles = Directory.GetFiles(gv.GetXmlFolderPass(), "*.xml", SearchOption.TopDirectoryOnly);
+			foreach (String xf in xmlfiles)
+			{
+				xmlFiles.Add(new XmlFiles
+				{
+					Name = Path.GetFileName(xf),
+					Path = xf
+				});
+			}
+			return xmlFiles;
+		}
+
+		/// <summary>
 		/// リストをXMLファイルに保存する。
 		/// </summary>
 		/// <param name="lList">保存するリスト</param>
@@ -155,7 +154,7 @@ namespace Launch_Soft_Together
 		{
 			string filePath = "";
 
-			filePath = SaveDialog("セーブします", Program.gv.GetXmlFolderPass(), "XMLファイル|*.xml");
+			filePath = SaveDialog("セーブします", gv.GetXmlFolderPass(), _Kakuchoshi_XMLFile);
 			if (filePath.Length > 0)
 			{
 				/* 選択したファイルをデシリアライズしてリストに格納する。 */
@@ -184,12 +183,11 @@ namespace Launch_Soft_Together
 			{
 				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 
-				StreamWriter sw = new StreamWriter(Program.gv.GetPreviousFilePass(), false, new UTF8Encoding(false));
+				StreamWriter sw = new StreamWriter(gv.GetPreviousFilePass(), false, new UTF8Encoding(false));
 
 				xmlSer.Serialize(sw, lList);
 				sw.Close();
 			}
-
 		}
 
 		/// <summary>
@@ -204,7 +202,7 @@ namespace Launch_Soft_Together
 			XmlSerializer xmlSer = new XmlSerializer(typeof(Config));
 			try
 			{
-				StreamWriter sw = new StreamWriter(Program.gv.GetConfigPass(), false, new UTF8Encoding(false));
+				StreamWriter sw = new StreamWriter(gv.GetConfigPass(), false, new UTF8Encoding(false));
 				config.Duplicate = Dup;
 				config.Delete = Del;
 				config.PrevData = Pre;
@@ -216,126 +214,163 @@ namespace Launch_Soft_Together
 			{
 				MessageBox.Show(soe.ToString());
 			}
-
-
 		}
 
-		/// <summary>
-		/// XMLファイルからリストを開く
-		/// </summary>
-		/// <returns>XMLから開いたリスト</returns>
-		public List<LaunchSoft> DeserializeXML()
+		public List<LaunchSoft> DeserializeXML(string filePath = "", bool lncConfirm = false)
 		{
-			List<LaunchSoft> llist = new List<LaunchSoft>();
-			string filePath = "";
+			List<LaunchSoft> rtnList = new List<LaunchSoft>();
+			string openPath = "";
 
-			filePath = OpenDialog("オープンするファイルを選択してください", Program.gv.MyDirectory, "XMLファイル|*.xml");
-			if (filePath.Length > 0)
+			if(filePath.Length < 1 && lncConfirm == false)
 			{
-				/* 選択したファイルをデシリアライズしてリストに格納する。 */
-				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
-				try
-				{
-					StreamReader sr = new StreamReader(filePath, new UTF8Encoding(false));
-					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
-					sr.Close();
-				}
-				catch (NotSupportedException nse)
-				{
-					llist = new List<LaunchSoft>()
-					{
-						new LaunchSoft()
-						{
-							Launch = false,
-							Name = "できない",
-							Path = nse.ToString()
-						}
-					};
-				}
+				// ダイアログからファイルを開く場合
+				openPath = OpenDialog("オープンするファイルを選択してください", gv.MyDirectory, _Kakuchoshi_XMLFile);
+			}
+			else if(lncConfirm == true)
+			{
+				// 前回ファイルを開く場合
+				filePath = gv.GetPreviousFilePass();
 			}
 			else
 			{
-				/* 処理なし */
+				// パスを指定してファイルを開く場合
+				openPath = filePath;
 			}
-
-			return llist;
-		}
-
-
-		public List<LaunchSoft> DeserializeXML(string xmlFilePath)
-		{
-			List<LaunchSoft> llist = new List<LaunchSoft>();
-
-			if (Program.xmlFile.Path.Length > 0)
-			{
-				/* 選択したファイルをデシリアライズしてリストに格納する。 */
-				XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
-				try
-				{
-					StreamReader sr = new StreamReader(Program.xmlFile.Path, new UTF8Encoding(false));
-					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
-					sr.Close();
-				}
-				catch (NotSupportedException nse)
-				{
-					llist = new List<LaunchSoft>()
-					{
-						new LaunchSoft()
-						{
-							Launch = false,
-							Name = "できない",
-							Path = nse.ToString()
-						}
-					};
-				}
-			}
-			else
-			{
-				/* 処理なし */
-			}
-
-			return llist;
-		}
-
-		/// <summary>
-		/// 前回使用していたデータを開く。
-		/// 無ければ
-		/// </summary>
-		/// <returns>前回使用していたデータ</returns>
-		public List<LaunchSoft> OpenPrevData()
-		{
-			List<LaunchSoft> llist = new List<LaunchSoft>();
 
 			/* 選択したファイルをデシリアライズしてリストに格納する。 */
 			XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 			try
 			{
-				if (File.Exists(Program.gv.GetPreviousFilePass()))
+				if (File.Exists(gv.GetPreviousFilePass()))
 				{
-					StreamReader sr = new StreamReader(Program.gv.GetPreviousFilePass(), new UTF8Encoding(false));
-					llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+					StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
+					rtnList = (List<LaunchSoft>)xmlSer.Deserialize(sr);
 					sr.Close();
 				}
 				else
 				{
-					llist = new List<LaunchSoft>();
+					MessageBox.Show("指定されたファイルが存在しません。");
+					rtnList = new List<LaunchSoft>();
 				}
 			}
 			catch (NotSupportedException nse)
 			{
-				llist = new List<LaunchSoft>()
-				{
-					new LaunchSoft()
-					{
-						Launch = false,
-						Name = "できない",
-						Path = nse.ToString()
-					}
-				};
+				MessageBox.Show("関数OpenPrevDataでエラーが発生しました。\n" + nse.HResult + " : " + nse.Message);
+				rtnList = new List<LaunchSoft>();
 			}
 
-			return llist;
+			return rtnList;
 		}
+
+		///// <summary>
+		///// XMLファイルからリストを開く
+		///// </summary>
+		///// <returns>XMLから開いたリスト</returns>
+		//public List<LaunchSoft> DeserializeXML()
+		//{
+		//	List<LaunchSoft> llist = new List<LaunchSoft>();
+		//	string filePath = "";
+
+		//	filePath = OpenDialog("オープンするファイルを選択してください", gv.MyDirectory, _Kakuchoshi_XMLFile);
+		//	if (filePath.Length > 0)
+		//	{
+		//		/* 選択したファイルをデシリアライズしてリストに格納する。 */
+		//		XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+		//		try
+		//		{
+		//			StreamReader sr = new StreamReader(filePath, new UTF8Encoding(false));
+		//			llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+		//			sr.Close();
+		//		}
+		//		catch (NotSupportedException nse)
+		//		{
+		//			llist = new List<LaunchSoft>()
+		//			{
+		//				new LaunchSoft()
+		//				{
+		//					Launch = false,
+		//					Name = "できない",
+		//					Path = nse.ToString()
+		//				}
+		//			};
+		//		}
+		//	}
+		//	else
+		//	{
+		//		/* 処理なし */
+		//	}
+
+		//	return llist;
+		//}
+
+
+		//public List<LaunchSoft> DeserializeXML(string xmlFilePath)
+		//{
+		//	List<LaunchSoft> llist = new List<LaunchSoft>();
+
+		//	if (xmlFile.Path.Length > 0)
+		//	{
+		//		/* 選択したファイルをデシリアライズしてリストに格納する。 */
+		//		XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+		//		try
+		//		{
+		//			StreamReader sr = new StreamReader(xmlFile.Path, new UTF8Encoding(false));
+		//			llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+		//			sr.Close();
+		//		}
+		//		catch (NotSupportedException nse)
+		//		{
+		//			llist = new List<LaunchSoft>()
+		//			{
+		//				new LaunchSoft()
+		//				{
+		//					Launch = false,
+		//					Name = "できない",
+		//					Path = nse.ToString()
+		//				}
+		//			};
+		//		}
+		//	}
+		//	else
+		//	{
+		//		/* 処理なし */
+		//	}
+
+		//	return llist;
+		//}
+
+		///// <summary>
+		///// 前回使用していたデータを開く。
+		///// 無ければ
+		///// </summary>
+		///// <returns>前回使用していたデータ</returns>
+		//public List<LaunchSoft> OpenPrevData()
+		//{
+		//	List<LaunchSoft> llist = new List<LaunchSoft>();
+
+		//	/* 選択したファイルをデシリアライズしてリストに格納する。 */
+		//	XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+		//	try
+		//	{
+		//		if (File.Exists(gv.GetPreviousFilePass()))
+		//		{
+		//			StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
+		//			llist = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+		//			sr.Close();
+		//		}
+		//		else
+		//		{
+		//			llist = new List<LaunchSoft>();
+		//		}
+		//	}
+		//	catch (NotSupportedException nse)
+		//	{
+		//		MessageBox.Show("関数OpenPrevDataでエラーが発生しました。\n" + nse.HResult + " : " + nse.Message );
+		//		llist = new List<LaunchSoft>();
+		//	}
+
+		//	return llist;
+		//}
 
 		/// <summary>
 		/// リスト内の重複をチェックする。
@@ -487,6 +522,7 @@ namespace Launch_Soft_Together
 		private static string configFile = "\\config\\";
 		private static string prevData = "Previous.xml";
 		private static string configData = "config.xml";
+		private static string saveTempo = "temp.xml";
 		private static string myDirectory = Directory.GetCurrentDirectory();
 		private static string userDesktop = "C:\\Users\\" + Environment.UserName + "\\Desktop\\";
 
@@ -595,5 +631,116 @@ namespace Launch_Soft_Together
 			set { isOpenPrevData = value; }
 		}
 	}
+	
+	public class OneTimeSave
+	{
+		private static string FilePath = "";
+		private static Config ConfClass = new Config();
 
+		public string XmlFilePath
+		{
+			get { return FilePath; }
+			set { FilePath = value; }
+		}
+		public Config config
+		{
+			get { return ConfClass; }
+			set { ConfClass = value; }
+		}
+
+		public void SerializeXML(string savePath, string xmlFilePath, Config config)
+		{
+			OneTimeSave ots = new OneTimeSave();
+			ots.XmlFilePath = xmlFilePath;
+			ots.config = config;
+
+			if(savePath.Length > 0)
+			{
+				XmlSerializer xmlser = new XmlSerializer(typeof(OneTimeSave));
+
+				StreamWriter sw = new StreamWriter(savePath, false, new UTF8Encoding(false));
+
+				xmlser.Serialize(sw, ots);
+				sw.Close();
+			}
+			else
+			{
+
+			}
+		}
+
+		public OneTimeSave DeserializeXML(string openPath)
+		{
+			OneTimeSave ots = new OneTimeSave();
+
+			try
+			{
+				XmlSerializer xmlSer = new XmlSerializer(typeof(OneTimeSave));
+				if (File.Exists(openPath))
+				{
+					StreamReader sr = new StreamReader(openPath, new UTF8Encoding(false));
+					ots = (OneTimeSave)xmlSer.Deserialize(sr);
+					sr.Close();
+				}
+				else
+				{
+					MessageBox.Show("指定されたファイルが存在しません。");
+					ots = new OneTimeSave();
+				}
+			}
+			catch (NotSupportedException nse)
+			{
+				MessageBox.Show("関数OpenPrevDataでエラーが発生しました。\n" + nse.HResult + " : " + nse.Message);
+				ots = new OneTimeSave();
+			}
+
+			return ots;
+		}
+	}
+
+	//public List<LaunchSoft> DeserializeXML(string filePath = "", bool lncConfirm = false)
+	//{
+	//	List<LaunchSoft> rtnList = new List<LaunchSoft>();
+	//	string openPath = "";
+
+	//	if (filePath.Length < 1 && lncConfirm == false)
+	//	{
+	//		// ダイアログからファイルを開く場合
+	//		openPath = OpenDialog("オープンするファイルを選択してください", gv.MyDirectory, _Kakuchoshi_XMLFile);
+	//	}
+	//	else if (lncConfirm == true)
+	//	{
+	//		// 前回ファイルを開く場合
+	//		filePath = gv.GetPreviousFilePass();
+	//	}
+	//	else
+	//	{
+	//		// パスを指定してファイルを開く場合
+	//		openPath = filePath;
+	//	}
+
+	//	/* 選択したファイルをデシリアライズしてリストに格納する。 */
+	//	XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
+	//	try
+	//	{
+	//		if (File.Exists(gv.GetPreviousFilePass()))
+	//		{
+	//			StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
+	//			rtnList = (List<LaunchSoft>)xmlSer.Deserialize(sr);
+	//			sr.Close();
+	//		}
+	//		else
+	//		{
+	//			MessageBox.Show("指定されたファイルが存在しません。");
+	//			rtnList = new List<LaunchSoft>();
+	//		}
+	//	}
+	//	catch (NotSupportedException nse)
+	//	{
+	//		MessageBox.Show("関数OpenPrevDataでエラーが発生しました。\n" + nse.HResult + " : " + nse.Message);
+	//		rtnList = new List<LaunchSoft>();
+	//	}
+
+	//	return rtnList;
+	//}
 }

@@ -32,7 +32,7 @@ namespace Launch_Soft_Together
 			
 			if (checkBox_LaunchConfirm.Checked == true)
 			{
-				prevSoft = cc.OpenPrevData();
+				prevSoft = cc.DeserializeXML(gv.GetPreviousFilePass(), true);
 			}
 			else
 			{
