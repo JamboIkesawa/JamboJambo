@@ -49,17 +49,16 @@ namespace Launch_Soft_Together
 		private void button_Add_Click(object sender, EventArgs e)
 		{
 			string filepath = "";
+			LaunchSoft addSoft = new LaunchSoft();
 
 			filepath = cc.OpenDialog("追加するファイルを選択してください", gv.GetDesktopPass(), "すべてのファイル|*.*");
 			if (filepath.Length > 0)
 			{
+				addSoft.Launch = true;
+				addSoft.Name = Path.GetFileName(filepath);
+				addSoft.Path = filepath;
 				cc.AddData(liSoft, 
-						   new LaunchSoft()
-						   {
-							   Launch = true,
-							   Name = Path.GetFileName(filepath),
-							   Path = filepath
-						   }, 
+						   addSoft, 
 						   checkBox_DuplicateCheck.Checked);
 				UpdateData();
 			}
@@ -167,7 +166,7 @@ namespace Launch_Soft_Together
 			cc.SaveConfig(checkBox_DuplicateCheck.Checked,
 						  checkBox_DeleteConfirm.Checked,
 						  checkBox_LaunchConfirm.Checked);
-			this.Close();
+			this.Dispose(true);
 		}
 
 	}

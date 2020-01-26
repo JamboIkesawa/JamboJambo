@@ -588,9 +588,9 @@ namespace Launch_Soft_Together
 
 	public class LaunchSoft
 	{
-		private static bool isLaunch;
-		private static string FileName;
-		private static string FilePath;
+		private bool isLaunch;
+		private string FileName;
+		private string FilePath;
 
 		public bool Launch
 		{

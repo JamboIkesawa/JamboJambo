@@ -19,16 +19,26 @@ namespace Launch_Soft_Together
 			xmlFiles = cm.OpenXmlFile();	// Xmlフォルダ内のファイルをリストに格納
 			dataGridView_FileList.DataSource = xmlFiles;
 			checkBox_LaunchConfirm.Checked = config.PrevData;
-			MessageBox.Show(dataGridView_FileList.Rows.Count.ToString());
 			ChangeGridViewStyle(dataGridView_FileList);
-			MessageBox.Show(dataGridView_FileList.Rows.Count.ToString());
 		}
 
 		private void button_ListOpen_Click(object sender, EventArgs e)
 		{
-			DataGridViewRow dgvRow = dataGridView_FileList.SelectedRows[0];
-			MessageBox.Show(dgvRow.Cells[0].Value.ToString());
-			MessageBox.Show(dgvRow.Cells[1].Value.ToString());
+			if(dataGridView_FileList.SelectedRows.Count < 1)
+			{
+				DisplayError("ここ不具合ポイント");
+			}
+			else
+			{
+				foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
+				{
+					ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
+				}
+			}
+			this.Dispose(true);
+			//DataGridViewRow dgvRow = dataGridView_FileList.SelectedRows[0];
+			//MessageBox.Show(dgvRow.Cells[0].Value.ToString());
+			//MessageBox.Show(dgvRow.Cells[1].Value.ToString());
 			//foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
 			//{
 			//	ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
@@ -38,6 +48,18 @@ namespace Launch_Soft_Together
 
 		private void dataGridView_FileList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
+			if (dataGridView_FileList.SelectedRows.Count < 1)
+			{
+				DisplayError("ここ不具合ポイント");
+			}
+			else
+			{
+				foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
+				{
+					ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
+				}
+			}
+			this.Dispose(true);
 			//if (dataGridView_FileList.SelectedRows.Count < 1)
 			//{
 			//	string strList = "";
@@ -56,10 +78,10 @@ namespace Launch_Soft_Together
 			//	}
 			//	// launchSofts = cm.DeserializeXML(xmlFile.Path);
 			//}
-			foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
-			{
-				ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
-			}
+			//foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
+			//{
+			//	ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
+			//}
 		}
 
 		private void dataGridView_FileList_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -97,6 +119,11 @@ namespace Launch_Soft_Together
 			//changeGrid.Rows[0].Height = 100;
 			changeGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
+		}
+
+		private void DisplayError(string errorMessage)
+		{
+			MessageBox.Show(errorMessage);
 		}
 	}
 }
