@@ -35,7 +35,9 @@ namespace Launch_Soft_Together
 					ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
 				}
 			}
+			cm.SaveConfig(config.Duplicate, config.Delete, checkBox_LaunchConfirm.Checked);
 			this.Dispose(true);
+
 			//DataGridViewRow dgvRow = dataGridView_FileList.SelectedRows[0];
 			//MessageBox.Show(dgvRow.Cells[0].Value.ToString());
 			//MessageBox.Show(dgvRow.Cells[1].Value.ToString());
@@ -59,7 +61,9 @@ namespace Launch_Soft_Together
 					ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
 				}
 			}
+			cm.SaveConfig(config.Duplicate, config.Delete, checkBox_LaunchConfirm.Checked);
 			this.Dispose(true);
+
 			//if (dataGridView_FileList.SelectedRows.Count < 1)
 			//{
 			//	string strList = "";

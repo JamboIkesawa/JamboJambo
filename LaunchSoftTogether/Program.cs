@@ -135,13 +135,13 @@ namespace Launch_Soft_Together
 		public List<XmlFiles> OpenXmlFile()
 		{
 			string[] xmlfiles = Directory.GetFiles(gv.GetXmlFolderPass(), "*.xml", SearchOption.TopDirectoryOnly);
+			xmlFiles = new List<XmlFiles>();
 			foreach (String xf in xmlfiles)
 			{
-				xmlFiles.Add(new XmlFiles
-				{
-					Name = Path.GetFileName(xf),
-					Path = xf
-				});
+				XmlFiles xml = new XmlFiles();
+				xml.Name = Path.GetFileName(xf);
+				xml.Path = xf;
+				xmlFiles.Add(xml);
 			}
 			return xmlFiles;
 		}
@@ -216,6 +216,12 @@ namespace Launch_Soft_Together
 			}
 		}
 
+		/// <summary>
+		/// ファイルパスからファイルをオープンして変数に持つ。
+		/// </summary>
+		/// <param name="filePath">オープンするファイルパス</param>
+		/// <param name="lncConfirm">前回ファイルを開くかのチェック</param>
+		/// <returns></returns>
 		public List<LaunchSoft> DeserializeXML(string filePath = "", bool lncConfirm = false)
 		{
 			List<LaunchSoft> rtnList = new List<LaunchSoft>();
@@ -567,8 +573,8 @@ namespace Launch_Soft_Together
 
 	public class XmlFiles
 	{
-		private string FileName;
-		private string FilePath;
+		private string FileName = "";
+		private string FilePath = "";
 
 		public string Name
 		{
@@ -584,9 +590,9 @@ namespace Launch_Soft_Together
 
 	public class LaunchSoft
 	{
-		private bool isLaunch;
-		private string FileName;
-		private string FilePath;
+		private bool isLaunch = false;
+		private string FileName = "";
+		private string FilePath = "";
 
 		public bool Launch
 		{
@@ -607,9 +613,9 @@ namespace Launch_Soft_Together
 
 	public class Config
 	{
-		private static bool isDuplicatePermission;
-		private static bool isDeleteConfirm;
-		private static bool isOpenPrevData;
+		private bool isDuplicatePermission = false;
+		private bool isDeleteConfirm = false;
+		private bool isOpenPrevData = false;
 
 		public bool Duplicate
 		{
@@ -644,6 +650,12 @@ namespace Launch_Soft_Together
 			set { ConfClass = value; }
 		}
 
+		/// <summary>
+		/// ファイル選択画面で指定したファイルパスとコンフィグを一時的に保存する。
+		/// </summary>
+		/// <param name="savePath">保存先のファイルパス</param>
+		/// <param name="xmlFilePath">保存するXMLファイルのパス</param>
+		/// <param name="config">保存するコンフィグ</param>
 		public void SerializeXML(string savePath, string xmlFilePath, Config config)
 		{
 			OneTimeSave ots = new OneTimeSave();
@@ -665,6 +677,12 @@ namespace Launch_Soft_Together
 			}
 		}
 
+		/// <summary>
+		/// 一時的にファイル選択画面で保存したファイルパスとコンフィグを開く。
+		/// 一時的に保存していたファイルは削除する。
+		/// </summary>
+		/// <param name="openPath">オープンするファイルのパス</param>
+		/// <returns></returns>
 		public OneTimeSave DeserializeXML(string openPath)
 		{
 			OneTimeSave ots = new OneTimeSave();
@@ -677,6 +695,7 @@ namespace Launch_Soft_Together
 					StreamReader sr = new StreamReader(openPath, new UTF8Encoding(false));
 					ots = (OneTimeSave)xmlSer.Deserialize(sr);
 					sr.Close();
+					File.Delete(openPath);
 				}
 				else
 				{
@@ -694,49 +713,4 @@ namespace Launch_Soft_Together
 		}
 	}
 
-	//public List<LaunchSoft> DeserializeXML(string filePath = "", bool lncConfirm = false)
-	//{
-	//	List<LaunchSoft> rtnList = new List<LaunchSoft>();
-	//	string openPath = "";
-
-	//	if (filePath.Length < 1 && lncConfirm == false)
-	//	{
-	//		// ダイアログからファイルを開く場合
-	//		openPath = OpenDialog("オープンするファイルを選択してください", gv.MyDirectory, _Kakuchoshi_XMLFile);
-	//	}
-	//	else if (lncConfirm == true)
-	//	{
-	//		// 前回ファイルを開く場合
-	//		filePath = gv.GetPreviousFilePass();
-	//	}
-	//	else
-	//	{
-	//		// パスを指定してファイルを開く場合
-	//		openPath = filePath;
-	//	}
-
-	//	/* 選択したファイルをデシリアライズしてリストに格納する。 */
-	//	XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
-	//	try
-	//	{
-	//		if (File.Exists(gv.GetPreviousFilePass()))
-	//		{
-	//			StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
-	//			rtnList = (List<LaunchSoft>)xmlSer.Deserialize(sr);
-	//			sr.Close();
-	//		}
-	//		else
-	//		{
-	//			MessageBox.Show("指定されたファイルが存在しません。");
-	//			rtnList = new List<LaunchSoft>();
-	//		}
-	//	}
-	//	catch (NotSupportedException nse)
-	//	{
-	//		MessageBox.Show("関数OpenPrevDataでエラーが発生しました。\n" + nse.HResult + " : " + nse.Message);
-	//		rtnList = new List<LaunchSoft>();
-	//	}
-
-	//	return rtnList;
-	//}
 }

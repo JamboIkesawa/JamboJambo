@@ -27,9 +27,14 @@ namespace Launch_Soft_Together
 			
 			InitializeComponent();
 			
+			// 設定項目(チェックボックス)の内容をコンフィグファイルから設定
 			cc.OpenConfig();
 			SetConfig();
+
+			// ファイル選択画面で指定したファイルを開く。
+			liSoft = cc.DeserializeXML("", checkBox_LaunchConfirm.Checked);
 			
+			// 前回ファイルを開く
 			if (checkBox_LaunchConfirm.Checked == true)
 			{
 				prevSoft = cc.DeserializeXML(gv.GetPreviousFilePass(), true);
@@ -38,8 +43,8 @@ namespace Launch_Soft_Together
 			{
 				prevSoft = new List<LaunchSoft>();
 			}
-			dataGridView_Prev.DataSource = prevSoft;
-			dataGridView_Current.DataSource = liSoft;
+			dataGridView_Prev.DataSource = prevSoft;	// 前回データを表示する
+			dataGridView_Current.DataSource = liSoft;	// 今回ファイルを表示する。
 			UpdateData();
 			ChangeGridViewStyle(dataGridView_Prev);
 			ChangeGridViewStyle(dataGridView_Current);
