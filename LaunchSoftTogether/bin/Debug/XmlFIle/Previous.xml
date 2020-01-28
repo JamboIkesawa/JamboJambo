@@ -2,17 +2,7 @@
 <ArrayOfLaunchSoft xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LaunchSoft>
     <Launch>true</Launch>
-    <Name>aviutl.exe</Name>
-    <Path>C:\Users\cvbgh\OneDrive\デスクトップ\Aviutl\aviutl.exe</Path>
-  </LaunchSoft>
-  <LaunchSoft>
-    <Launch>true</Launch>
-    <Name>chrome.exe</Name>
-    <Path>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</Path>
-  </LaunchSoft>
-  <LaunchSoft>
-    <Launch>true</Launch>
-    <Name>slack.exe</Name>
-    <Path>C:\Users\cvbgh\AppData\Local\slack\slack.exe</Path>
+    <Name>C言語学習.txt</Name>
+    <Path>C:\Users\BP-022\Desktop\ショートカット\C言語学習.txt</Path>
   </LaunchSoft>
 </ArrayOfLaunchSoft>

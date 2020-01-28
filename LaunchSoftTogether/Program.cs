@@ -456,10 +456,6 @@ namespace Launch_Soft_Together
 					{
 						MessageBox.Show("エラー\n" + fnfe.ToString());
 					}
-					finally
-					{
-						MessageBox.Show("");
-					}
 				}
 			}
 			else
