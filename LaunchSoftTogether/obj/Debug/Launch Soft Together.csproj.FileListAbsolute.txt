@@ -59,3 +59,33 @@ C:\Users\cvbgh\jambojambo\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Main
 C:\Users\cvbgh\jambojambo\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Properties.Resources.resources
 C:\Users\cvbgh\jambojambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.csproj.GenerateResource.cache
 C:\Users\cvbgh\jambojambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.csproj.CoreCompileInputs.cache
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\bin\Debug\Launch Soft Together.exe.config
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\bin\Debug\Launch Soft Together.exe
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\bin\Debug\Launch Soft Together.pdb
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.csprojAssemblyReference.cache
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.FileSelection.resources
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Main.resources
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Properties.Resources.resources
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.csproj.GenerateResource.cache
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.exe
+C:\Users\直樹\Desktop\git\JamboJambo\LaunchSoftTogether\obj\Debug\Launch Soft Together.pdb
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\bin\Debug\Launch Soft Together.exe.config
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\obj\Debug\Launch Soft Together.exe
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\obj\Debug\Launch Soft Together.pdb
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\bin\Debug\Launch Soft Together.exe
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\bin\Debug\Launch Soft Together.pdb
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\obj\Debug\Launch Soft Together.csprojResolveAssemblyReference.cache
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.FileSelection.resources
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Main.resources
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Properties.Resources.resources
+C:\Users\BP-022\Desktop\設計書\LaunchSoftTogether\obj\Debug\Launch Soft Together.csproj.GenerateResource.Cache
+C:\Users\直樹\Desktop\LaunchSoftTogether\bin\Debug\Launch Soft Together.exe.config
+C:\Users\直樹\Desktop\LaunchSoftTogether\bin\Debug\Launch Soft Together.exe
+C:\Users\直樹\Desktop\LaunchSoftTogether\bin\Debug\Launch Soft Together.pdb
+C:\Users\直樹\Desktop\LaunchSoftTogether\obj\Debug\Launch Soft Together.csprojAssemblyReference.cache
+C:\Users\直樹\Desktop\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.FileSelection.resources
+C:\Users\直樹\Desktop\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Main.resources
+C:\Users\直樹\Desktop\LaunchSoftTogether\obj\Debug\Launch_Soft_Together.Properties.Resources.resources
+C:\Users\直樹\Desktop\LaunchSoftTogether\obj\Debug\Launch Soft Together.csproj.GenerateResource.cache
+C:\Users\直樹\Desktop\LaunchSoftTogether\obj\Debug\Launch Soft Together.exe
+C:\Users\直樹\Desktop\LaunchSoftTogether\obj\Debug\Launch Soft Together.pdb

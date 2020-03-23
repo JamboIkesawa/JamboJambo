@@ -153,8 +153,22 @@ namespace Launch_Soft_Together
 		public void SerializeXML(List<LaunchSoft> lList)
 		{
 			string filePath = "";
+			bool isContains = false;
 
-			filePath = SaveDialog("セーブします", gv.GetXmlFolderPass(), _Kakuchoshi_XMLFile);
+			do
+			{
+				filePath = SaveDialog("セーブします", gv.GetXmlFolderPass(), _Kakuchoshi_XMLFile);
+				if(filePath.Contains(gv.SaveTemp))
+				{
+					isContains = true;
+					MessageBox.Show("予約されたファイル名です。別のファイル名を指定してください。");
+				}
+				else
+				{
+					isContains = false;
+				}
+			} while (isContains == true);
+
 			if (filePath.Length > 0)
 			{
 				/* 選択したファイルをデシリアライズしてリストに格納する。 */
@@ -548,6 +562,11 @@ namespace Launch_Soft_Together
 			get { return configData; }
 			//set { configData = value; }
 		}
+		public string SaveTemp
+		{
+			get { return saveTempo; }
+			// set { saveTempo = value; }
+		}
 		public string MyDirectory
 		{
 			get { return myDirectory; }
@@ -568,6 +587,10 @@ namespace Launch_Soft_Together
 		public string GetDesktopPass()
 		{
 			return userDesktop;
+		}
+		public string GetTempFilePass()
+		{
+			return myDirectory + xmlFile + saveTempo;
 		}
 	}
 
@@ -667,7 +690,7 @@ namespace Launch_Soft_Together
 				XmlSerializer xmlser = new XmlSerializer(typeof(OneTimeSave));
 
 				StreamWriter sw = new StreamWriter(savePath, false, new UTF8Encoding(false));
-
+				
 				xmlser.Serialize(sw, ots);
 				sw.Close();
 			}

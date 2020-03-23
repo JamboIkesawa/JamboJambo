@@ -19,6 +19,7 @@ namespace Launch_Soft_Together
 		List<LaunchSoft> liSoft = new List<LaunchSoft>();
 		GlobalVariables gv = new GlobalVariables();
 		CommonMethod cc = new CommonMethod();
+		OneTimeSave ots = new OneTimeSave();
 
 		/* フォームを開いたときにする処理 */
 		public Main()
@@ -26,13 +27,16 @@ namespace Launch_Soft_Together
 			List<LaunchSoft> prevSoft = new List<LaunchSoft>();
 			
 			InitializeComponent();
-			
+
+			// TODO:ここで一時保存したファイルを変数に保持する
 			// 設定項目(チェックボックス)の内容をコンフィグファイルから設定
-			cc.OpenConfig();
+			ots = ots.DeserializeXML(gv.GetTempFilePass());
+
+			//cc.OpenConfig();
 			SetConfig();
 
 			// ファイル選択画面で指定したファイルを開く。
-			liSoft = cc.DeserializeXML("", checkBox_LaunchConfirm.Checked);
+			liSoft = cc.DeserializeXML(ots.XmlFilePath, checkBox_LaunchConfirm.Checked);//""をotsのパスにする
 			
 			// 前回ファイルを開く
 			if (checkBox_LaunchConfirm.Checked == true)

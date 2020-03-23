@@ -32,20 +32,11 @@ namespace Launch_Soft_Together
 			{
 				foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
 				{
-					ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
+					OutOTS(xmlFiles[dgvRow.Index].Path);
 				}
 			}
-			cm.SaveConfig(config.Duplicate, config.Delete, checkBox_LaunchConfirm.Checked);
-			this.Dispose(true);
-
-			//DataGridViewRow dgvRow = dataGridView_FileList.SelectedRows[0];
-			//MessageBox.Show(dgvRow.Cells[0].Value.ToString());
-			//MessageBox.Show(dgvRow.Cells[1].Value.ToString());
-			//foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
-			//{
-			//	ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
-			//}
-			// launchSofts = cm.DeserializeXML(xmlFile.Path);
+			FormClose(true);
+			
 		}
 
 		private void dataGridView_FileList_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -58,34 +49,11 @@ namespace Launch_Soft_Together
 			{
 				foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
 				{
-					ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
+					OutOTS(xmlFiles[dgvRow.Index].Path);
 				}
 			}
-			cm.SaveConfig(config.Duplicate, config.Delete, checkBox_LaunchConfirm.Checked);
-			this.Dispose(true);
-
-			//if (dataGridView_FileList.SelectedRows.Count < 1)
-			//{
-			//	string strList = "";
-			//	foreach (XmlFiles xf in xmlFiles)
-			//	{
-			//		strList = strList + "\n" + xf.Name + " : " + xf.Path;
-			//	}
-			//	MessageBox.Show("選択されたリストがありません。\nXmlファイルリスト\n" + strList);
-			//	return;
-			//}
-			//else
-			//{
-			//	foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
-			//	{
-			//		xmlFile = xmlFiles[dgvRow.Index];
-			//	}
-			//	// launchSofts = cm.DeserializeXML(xmlFile.Path);
-			//}
-			//foreach (DataGridViewRow dgvRow in dataGridView_FileList.SelectedRows)
-			//{
-			//	ots.SerializeXML(gv.GetXmlFolderPass(), xmlFiles[dgvRow.Index].Path, config);
-			//}
+			FormClose(true);
+			
 		}
 
 		private void dataGridView_FileList_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -98,7 +66,8 @@ namespace Launch_Soft_Together
 
 		private void FileSelection_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			config.PrevData = checkBox_LaunchConfirm.Checked;
+			OutOTS("");
+			FormClose(true);
 		}
 
 		private void ChangeGridViewStyle(DataGridView changeGrid)
@@ -125,6 +94,16 @@ namespace Launch_Soft_Together
 
 		}
 
+		private void OutOTS(string listPath)
+		{
+			ots.SerializeXML(gv.GetTempFilePass(), listPath, config);
+		}
+
+		private void FormClose(bool disposing)
+		{
+			this.Dispose(disposing);
+		}
+		
 		private void DisplayError(string errorMessage)
 		{
 			MessageBox.Show(errorMessage);

@@ -5,6 +5,7 @@ FileSelection
 ・DataGridView内に表示されているXmlファイルをダブルクリック・開くボタンで開こうとすると、DataGridView内にデータが入っていない扱いになる
 	→DataGridViewのDataSourceに入れるXmlFilesのインスタンスにはデータが入っているため、DataSourceに設定しているところで原因あり？
 	→Mainの中で定数を定義すればいい説。
+		→デザイン側でDataGridViewのプロパティがFullRowSelectになっていないのが原因だった。
 
 
 Main
