@@ -33,15 +33,15 @@ namespace Launch_Soft_Together
 			ots = ots.DeserializeXML(gv.GetTempFilePass());
 
 			//cc.OpenConfig();
-			SetConfig();
+			SetConfig(cc.OpenConfig(), ots.config);
 
 			// ファイル選択画面で指定したファイルを開く。
-			liSoft = cc.DeserializeXML(ots.XmlFilePath, checkBox_LaunchConfirm.Checked);//""をotsのパスにする
+			liSoft = cc.DeserializeXML(ots.XmlFilePath);
 			
 			// 前回ファイルを開く
 			if (checkBox_LaunchConfirm.Checked == true)
 			{
-				prevSoft = cc.DeserializeXML(gv.GetPreviousFilePass(), true);
+				prevSoft = cc.DeserializeXML(gv.GetPreviousFilePass());
 			}
 			else
 			{
@@ -158,9 +158,9 @@ namespace Launch_Soft_Together
 		/// <summary>
 		/// フォームオープン時にチェックボックスの内容を設定する。
 		/// </summary>
-		private void SetConfig()
+		private void SetConfig(Config config, Config otsConfig)
 		{
-			Config config = new Config();
+			config.PrevData = otsConfig.PrevData;
 			checkBox_DuplicateCheck.Checked = config.Duplicate;
 			checkBox_DeleteConfirm.Checked = config.Delete;
 			checkBox_LaunchConfirm.Checked = config.PrevData;

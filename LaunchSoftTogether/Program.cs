@@ -236,41 +236,43 @@ namespace Launch_Soft_Together
 		/// <param name="filePath">オープンするファイルパス</param>
 		/// <param name="lncConfirm">前回ファイルを開くかのチェック</param>
 		/// <returns></returns>
-		public List<LaunchSoft> DeserializeXML(string filePath = "", bool lncConfirm = false)
+		public List<LaunchSoft> DeserializeXML(string filePath = "")
 		{
 			List<LaunchSoft> rtnList = new List<LaunchSoft>();
 			string openPath = "";
 
-			if(filePath.Length < 1 && lncConfirm == false)
+			/*if(filePath.Length < 1)
 			{
 				// ダイアログからファイルを開く場合
 				openPath = OpenDialog("オープンするファイルを選択してください", gv.MyDirectory, _Kakuchoshi_XMLFile);
-			}
-			else if(lncConfirm == true)
-			{
-				// 前回ファイルを開く場合
-				filePath = gv.GetPreviousFilePass();
 			}
 			else
 			{
 				// パスを指定してファイルを開く場合
 				openPath = filePath;
-			}
+			}*/
 
 			/* 選択したファイルをデシリアライズしてリストに格納する。 */
 			XmlSerializer xmlSer = new XmlSerializer(typeof(List<LaunchSoft>));
 			try
 			{
-				if (File.Exists(gv.GetPreviousFilePass()))
+				if (File.Exists(filePath))
 				{
-					StreamReader sr = new StreamReader(gv.GetPreviousFilePass(), new UTF8Encoding(false));
+					StreamReader sr = new StreamReader(filePath, new UTF8Encoding(false));
 					rtnList = (List<LaunchSoft>)xmlSer.Deserialize(sr);
 					sr.Close();
 				}
 				else
 				{
-					MessageBox.Show("指定されたファイルが存在しません。");
-					rtnList = new List<LaunchSoft>();
+					if (filePath.Length < 1)
+					{
+						// 処理なし
+					}
+					else
+					{
+						MessageBox.Show("指定されたファイルが存在しません。");
+						rtnList = new List<LaunchSoft>();
+					}
 				}
 			}
 			catch (NotSupportedException nse)

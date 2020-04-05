@@ -8,6 +8,7 @@ namespace Launch_Soft_Together
 	{
 		CommonMethod cm = new CommonMethod();
 		List<XmlFiles> xmlFiles = new List<XmlFiles>();
+		XmlFiles xmlfile = new XmlFiles();
 		OneTimeSave ots = new OneTimeSave();
 		GlobalVariables gv = new GlobalVariables();
 		Config config = new Config();
@@ -15,8 +16,15 @@ namespace Launch_Soft_Together
 		public FileSelection()
 		{
 			InitializeComponent();
-			config = cm.OpenConfig();	// Configファイルを開く
-			xmlFiles = cm.OpenXmlFile();	// Xmlフォルダ内のファイルをリストに格納
+			config = cm.OpenConfig();   // Configファイルを開く
+										// ダミー
+			xmlfile.Name = "(選択しない)";
+			xmlfile.Path = "";
+			xmlFiles.Add(xmlfile);
+			foreach(XmlFiles xf in cm.OpenXmlFile())	// Xmlフォルダ内のファイルをリストに格納
+			{
+				xmlFiles.Add(xf);
+			}
 			dataGridView_FileList.DataSource = xmlFiles;
 			checkBox_LaunchConfirm.Checked = config.PrevData;
 			ChangeGridViewStyle(dataGridView_FileList);

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLaunchSoft xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LaunchSoft>
+    <Launch>true</Launch>
+    <Name>IPMsg.exe</Name>
+    <Path>C:\Users\直樹\AppData\Local\IPMsg\IPMsg.exe</Path>
+  </LaunchSoft>
+  <LaunchSoft>
+    <Launch>true</Launch>
+    <Name>Book.xlsx</Name>
+    <Path>C:\Users\直樹\Desktop\Book.xlsx</Path>
+  </LaunchSoft>
+</ArrayOfLaunchSoft>

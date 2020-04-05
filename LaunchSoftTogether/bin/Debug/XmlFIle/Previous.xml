@@ -2,17 +2,17 @@
 <ArrayOfLaunchSoft xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LaunchSoft>
     <Launch>true</Launch>
-    <Name>C言語学習.txt</Name>
-    <Path>C:\Users\BP-022\Desktop\ショートカット\C言語学習.txt</Path>
+    <Name>IPMsg.exe</Name>
+    <Path>C:\Users\直樹\AppData\Local\IPMsg\IPMsg.exe</Path>
   </LaunchSoft>
   <LaunchSoft>
     <Launch>true</Launch>
-    <Name>PC注文画面(振込先).png</Name>
-    <Path>C:\Users\cvbgh\OneDrive\デスクトップ\PC注文画面(振込先).png</Path>
+    <Name>Book.xlsx</Name>
+    <Path>C:\Users\直樹\Desktop\Book.xlsx</Path>
   </LaunchSoft>
   <LaunchSoft>
     <Launch>true</Launch>
-    <Name>インストールしておきたいもの.txt</Name>
-    <Path>C:\Users\cvbgh\OneDrive\デスクトップ\インストールしておきたいもの.txt</Path>
+    <Name>IPMsg.exe</Name>
+    <Path>C:\Users\直樹\AppData\Local\IPMsg\IPMsg.exe</Path>
   </LaunchSoft>
 </ArrayOfLaunchSoft>
