@@ -8,9 +8,7 @@ using UnityEngine.UI;
 
 public class Lamp_Manager : MonoBehaviour
 {
-    [SerializeField]    private Material    color_LightOff      =   null;
-    [SerializeField]    private Material    color_LightOn       =   null;
-    [SerializeField]    private Material    color_LightOn_Half  =   null;
+    [SerializeField]    private List<Material> colors           =   null;
     [SerializeField]    private Text        txt_Status          =   null;
 
     private Material lmp_mat = null;
@@ -26,10 +24,8 @@ public class Lamp_Manager : MonoBehaviour
         txt_Status.text = Define.TXT_CLEAR;
 
         // ランプを初期化
-        //lmp_mat = gameObject.GetComponent<Material>();
-        //fnc_set_lmp(color_LightOff);
         lmp_mere = gameObject.GetComponent<MeshRenderer>();
-        fnc_set_lmp_mere(color_LightOff);
+        fnc_set_lmp_mere(colors[CL_LIGHTOFF]);
     }
 
     // Update is called once per frame
@@ -43,7 +39,7 @@ public class Lamp_Manager : MonoBehaviour
                 break;
             case ST_TURNON:
                 txt_Status.text = TXT_ST_TURNON;
-                fnc_lmp_turnoff();
+                fnc_lmp_turnon();
                 break;
             case ST_FLASHING:
                 txt_Status.text = TXT_ST_FLASHING;
@@ -51,7 +47,7 @@ public class Lamp_Manager : MonoBehaviour
                 break;
             case ST_INTENSITY_CHG:
                 txt_Status.text = TXT_ST_INTENSITY_CHG;
-                fnc_lmp_intensityChg();
+                fnc_lmp_intensityChg(button_edge.BtnEdge);
                 break;
             default:
                 // 処理なし
@@ -69,6 +65,7 @@ public class Lamp_Manager : MonoBehaviour
         }
     }
 
+#region public function
     /* public関数 */
     
     public void fnc_clear()
@@ -101,7 +98,9 @@ public class Lamp_Manager : MonoBehaviour
         fnc_sts_update(ST_INTENSITY_CHG, CMN_TRUE);
     }
     /*************************************/
+#endregion
 
+#region private function
     /* private関数 */
     private void fnc_sts_update(int new_sts, bool btn_edge)
     {
@@ -111,27 +110,42 @@ public class Lamp_Manager : MonoBehaviour
     
     private void fnc_lmp_clear()
     {
-        fnc_set_lmp(color_LightOff);
+        fnc_set_lmp_mere(colors[CL_LIGHTOFF]);
     }
 
     private void fnc_lmp_turnoff()
     {
-        fnc_set_lmp(color_LightOff);
+        fnc_set_lmp_mere(colors[CL_LIGHTOFF]);
     }
 
     private void fnc_lmp_turnon()
     {
-        fnc_set_lmp(color_LightOn);
+        fnc_set_lmp_mere(colors[CL_LIGHTON]);
     }
 
     private void fnc_lmp_flashing()
     {
-        fnc_set_lmp(color_LightOn);
+        fnc_set_lmp_mere(colors[CL_LIGHTON]);
     }
 
-    private void fnc_lmp_intensityChg()
+    private void fnc_lmp_intensityChg(bool btn_edge)
     {
-        fnc_set_lmp(color_LightOn_Half);
+        if(btn_edge == CMN_TRUE)
+        {
+            fnc_set_lmp_mere(colors[btn_clk_cnt]);
+            if(btn_clk_cnt < colors.Count)
+            {
+                btn_clk_cnt = 0;
+            }
+            else
+            {
+                btn_clk_cnt++;
+            }
+        }
+        else
+        {
+            // 処理なし
+        }
     }
 
     private void fnc_clear_edge()
@@ -139,13 +153,10 @@ public class Lamp_Manager : MonoBehaviour
         button_edge.BtnEdge = CMN_FALSE;
     }
 
-    private void fnc_set_lmp(Material set_mat)
-    {
-        lmp_mat = set_mat;
-    }
     private void fnc_set_lmp_mere(Material set_mere)
     {
-        lmp_mere.materials[0] = set_mere;
+        lmp_mere.materials[0].color = set_mere.color;
     }
     /*************************************/
+#endregion
 }

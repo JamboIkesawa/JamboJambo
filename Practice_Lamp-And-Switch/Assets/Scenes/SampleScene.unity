@@ -1022,9 +1022,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a002fe2c7c102f4d8438b1b0dffc78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color_LightOff: {fileID: 2100000, guid: c5d45b671b7cb844bac0a945e6ab53b8, type: 2}
-  color_LightOn: {fileID: 2100000, guid: 41bee64930be0424abb6c635c9f14ff2, type: 2}
-  color_LightOn_Half: {fileID: 2100000, guid: e2b5e9f59c7e9f442923e4e2e48b85cf, type: 2}
+  colors:
+  - {fileID: 2100000, guid: c5d45b671b7cb844bac0a945e6ab53b8, type: 2}
+  - {fileID: 2100000, guid: 41bee64930be0424abb6c635c9f14ff2, type: 2}
+  - {fileID: 2100000, guid: e2b5e9f59c7e9f442923e4e2e48b85cf, type: 2}
   txt_Status: {fileID: 1328558145}
 --- !u!1 &963194225
 GameObject:

@@ -39,6 +39,9 @@ namespace Constants
         public static Lamp lamp_old = new Lamp();   // 不要のため未使用
 
         public static Edge button_edge = new Edge();
+
+        // fnc_lmp_intensityChgで使う変数
+        public static int btn_clk_cnt = 0;
     }
 
     public class Lamp
