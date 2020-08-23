@@ -1,0 +1,142 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Constants;
+using static Constants.Define;
+using static Constants.StaticVar;
+using UnityEngine.UI;
+
+public class Lamp_Manager : MonoBehaviour
+{
+    [SerializeField]    private Material    color_LightOff      =   null;
+    [SerializeField]    private Material    color_LightOn       =   null;
+    [SerializeField]    private Material    color_LightOn_Half  =   null;
+    [SerializeField]    private Text        txt_Status          =   null;
+
+    private Material lmp_mat = null;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // 変数を初期化
+        lamp.LampStatus = ST_TURNOFF;
+        lamp_old.LampStatus = ST_TURNOFF;
+
+        // UIを初期化
+        txt_Status.text = Define.TXT_CLEAR;
+
+        // ランプを初期化
+        lmp_mat = gameObject.GetComponent<Material>();
+        fnc_set_lmp(color_LightOff);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // 状態が変わった時に最新の状態の処理を行う
+        if(lamp.LampStatus != lamp_old.LampStatus)
+        {
+            Debug.Log("状態更新：" + lamp.LampStatus.ToString());
+            switch(lamp.LampStatus)
+            {
+                case ST_TURNOFF:
+                    txt_Status.text = TXT_ST_TURNOFF;
+                    fnc_lmp_turnoff();
+                    break;
+                case ST_TURNON:
+                    txt_Status.text = TXT_ST_TURNON;
+                    fnc_lmp_turnoff();
+                    break;
+                case ST_FLASHING:
+                    txt_Status.text = TXT_ST_FLASHING;
+                    fnc_lmp_flashing();
+                    break;
+                case ST_INTENSITY_CHG:
+                    txt_Status.text = TXT_ST_INTENSITY_CHG;
+                    fnc_lmp_intensityChg();
+                    break;
+                default:
+                    break;
+            }
+
+            // 最新の状態を保持
+            lamp_old.LampStatus = lamp.LampStatus;
+        }
+        else
+        {
+            // 処理なし
+        }
+        // Debug.Log("現在状態：" + lamp.LampStatus.ToString());
+        // Debug.Log("前回状態：" + lamp_old.LampStatus.ToString());
+    }
+
+    /* public関数 */
+    
+    public void fnc_clear()
+    {
+        Debug.Log("クリアがクリックされました。");
+        fnc_sts_update(ST_TURNOFF);
+    }
+
+    public void fnc_turnoff()
+    {
+        Debug.Log("通常消灯がクリックされました。");
+        fnc_sts_update(ST_TURNOFF);
+    }
+
+    public void fnc_turnon()
+    {
+        Debug.Log("通常点灯がクリックされました。");
+        fnc_sts_update(ST_TURNON);
+    }
+
+    public void fnc_flashing()
+    {
+        Debug.Log("点滅がクリックされました。");
+        fnc_sts_update(ST_FLASHING);
+    }
+
+    public void fnc_intensityChg()
+    {
+        Debug.Log("強度変更がクリックされました。");
+        fnc_sts_update(ST_INTENSITY_CHG);
+    }
+    /*************************************/
+
+    /* private関数 */
+    private void fnc_sts_update(int new_sts)
+    {
+        lamp.LampStatus = new_sts;
+    }
+    
+    private void fnc_lmp_clear()
+    {
+        fnc_set_lmp(color_LightOff);
+    }
+
+    private void fnc_lmp_turnoff()
+    {
+        fnc_set_lmp(color_LightOff);
+    }
+
+    private void fnc_lmp_turnon()
+    {
+        fnc_set_lmp(color_LightOn);
+    }
+
+    private void fnc_lmp_flashing()
+    {
+
+    }
+
+    private void fnc_lmp_intensityChg()
+    {
+
+    }
+
+    private void fnc_set_lmp(Material set_mat)
+    {
+        lmp_mat = set_mat;
+    }
+    /*************************************/
+}

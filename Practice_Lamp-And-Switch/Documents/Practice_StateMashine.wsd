@@ -1,0 +1,24 @@
+@startuml
+
+[*] --> State1
+State1 --> [*]
+State1 : this is a string
+State1 : this is another string
+
+State1 -> State2
+State2 --> [*]
+
+State1 --> State3
+
+State2 : ->で右に伸びる
+State3 : -->で下に伸びる
+
+State3 --> 複合状態
+複合状態 --> State4
+state 複合状態{
+    [*] --> ステート1
+    ステート1 --> State4 : Event1
+}
+
+
+@enduml
